@@ -20,7 +20,7 @@
 </head>
 <body>
 <h1>Hello, world!</h1>
-<div class="container">
+<div class="container" data-bs-spy="scroll">
     <%if(list != null && !list.isEmpty()){%>
     <%for(TodoEntity item : list) { %>
     <div class="card mb-3">

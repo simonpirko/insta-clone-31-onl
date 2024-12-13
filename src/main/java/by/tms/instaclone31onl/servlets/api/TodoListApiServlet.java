@@ -36,7 +36,7 @@ public class TodoListApiServlet extends HttpApiServlet {
         getServletContext().getRequestDispatcher(ServletUrlsConstants.TODO_URL_JSP).forward(req, resp);
     }
 
-    //    @Override
+//        @Override
 //    protected Object doGetApi(HttpServletRequest req, HttpServletResponse resp) {
 //        TodoService todoService = serviceFactory.getTodoService();
 //        return todoService.getAll(getPredicate(req));

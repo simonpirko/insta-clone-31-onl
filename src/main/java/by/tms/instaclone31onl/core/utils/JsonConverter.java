@@ -1,6 +1,8 @@
 package by.tms.instaclone31onl.core.utils;
 
 import by.tms.instaclone31onl.core.adapters.LocalDateTypeAdapter;
+import by.tms.instaclone31onl.core.adapters.PostStatusTypeAdapter;
+import by.tms.instaclone31onl.core.enums.PostStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -12,6 +14,7 @@ public final class JsonConverter {
     {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(PostStatus.class, new PostStatusTypeAdapter())
                 .create();
         return gson.toJson(obj);
     }
@@ -19,12 +22,14 @@ public final class JsonConverter {
     public static <T> T deserialize(String json, Class<T> tClass) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(PostStatus.class, new PostStatusTypeAdapter())
                 .create();
         return (T)gson.fromJson(json, tClass);
     }
     public static <T> T deserialize(BufferedReader buffer, Class<T> tClass) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .registerTypeAdapter(PostStatus.class, new PostStatusTypeAdapter())
                 .create();
         return (T)gson.fromJson(buffer, tClass);
     }
