@@ -1,5 +1,6 @@
-package by.tms.instaclone31onl.login;
+package by.tms.instaclone31onl.servlets.login;
 
+import by.tms.instaclone31onl.core.constants.ServletConstants;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,7 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/login")
+@WebServlet(ServletConstants.LOGIN_SERVLET)
 public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

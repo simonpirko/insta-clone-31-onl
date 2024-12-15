@@ -1,5 +1,6 @@
-package by.tms.instaclone31onl.authorization;
+package by.tms.instaclone31onl.servlets.authorization;
 
+import by.tms.instaclone31onl.core.constants.ServletConstants;
 import com.opencsv.CSVWriter;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -12,7 +13,7 @@ import jakarta.servlet.http.HttpSession;
 import java.io.*;
 import java.util.UUID;
 
-@WebServlet("/authorization")
+@WebServlet(ServletConstants.AUTHORIZATION_SERVLET)
 public class AuthorizationServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
