@@ -6,8 +6,8 @@ import java.util.Map;
 
 public class CsvContext {
     private static CsvContext instance;
-    private final Map<Class<?>, CsvTable> maps;
-    private CsvContext(Map<Class<?>, CsvTable> maps) {
+    private final Map<Class<? >, CsvTable<?>> maps;
+    private CsvContext(Map<Class<?>, CsvTable<?>> maps) {
         this.maps = maps;
     }
 
@@ -15,7 +15,7 @@ public class CsvContext {
         return maps.getOrDefault(clazz, null);
     }
 
-    public static void configuration(Map<Class<?>, CsvTable> maps){
+    public static void configuration(Map<Class<?>, CsvTable<?>> maps){
         if(instance != null){
             return;
         }

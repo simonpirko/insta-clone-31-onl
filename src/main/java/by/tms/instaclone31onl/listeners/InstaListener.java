@@ -6,8 +6,8 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 @WebListener
-public class InstaListener implements ServletContextListener {
-    @Override
+public class InstaListener implements ServletContextListener{
+@Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
             CsvUpdater.getInstance().configuration();

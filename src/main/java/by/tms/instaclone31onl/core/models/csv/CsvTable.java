@@ -25,8 +25,8 @@ public class CsvTable<T> {
         return aClass;
     }
 
-    public static <T> CsvTable getInstance(final String name, final String[] header, final String path, Class<T> aClass) {
-        return new CsvTable(name, header, path, aClass);
+    public static <T> CsvTable<T> getInstance(final String name, final String[] header, final String path, Class<T> aClass) {
+        return new CsvTable<T>(name, header, path, aClass);
     }
 
 }

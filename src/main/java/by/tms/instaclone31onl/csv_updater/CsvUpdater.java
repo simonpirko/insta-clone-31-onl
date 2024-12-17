@@ -20,7 +20,7 @@ public class CsvUpdater {
     public void configuration() throws IOException {
         Reflections reflections = new Reflections("by.tms.instaclone31onl.core.models.entities");
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Entity.class);
-        Map<Class<?>, CsvTable> tables = new HashMap<>();
+        Map<Class<?>, CsvTable<?>> tables = new HashMap<>();
         for (Class cls : classes) {
             Entity table = (Entity) cls.getAnnotation(Entity.class);
 
