@@ -11,6 +11,7 @@ import org.reflections.serializers.JsonSerializer;
 import javax.swing.text.DateFormatter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Post extends BaseEntity implements DateUpdatable{
     @CsvBindByPosition(position = 3)
     private List<String> images;
     @CsvBindByPosition(position = 4)
-    private LocalDate lastUpdatedAt;
+    private LocalDateTime lastUpdatedAt;
     @CsvBindByPosition(position = 5)
     private final PostStatus status;
 
@@ -33,7 +34,7 @@ public class Post extends BaseEntity implements DateUpdatable{
                 UUID userId,
                 String description,
                 List<String> images,
-                LocalDate lastUpdatedAt,
+                LocalDateTime lastUpdatedAt,
                 PostStatus status) {
         super(id);
         this.userId = userId;
@@ -51,7 +52,7 @@ public class Post extends BaseEntity implements DateUpdatable{
     public List<String> getImages() {
         return images;
     }
-    public LocalDate getLastUpdatedAt() {
+    public LocalDateTime getLastUpdatedAt() {
         return lastUpdatedAt;
     }
     public PostStatus getStatus() {
@@ -64,7 +65,7 @@ public class Post extends BaseEntity implements DateUpdatable{
                 UUID.fromString(line[1]),
                 line[2],
                 images,
-                LocalDate.parse(line[4],DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT)),
+                LocalDateTime.parse(line[4],DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT)),
                 PostStatus.getStatusByValue(line[5]));
     }
     @Override
@@ -74,13 +75,13 @@ public class Post extends BaseEntity implements DateUpdatable{
                 String.valueOf(userId),
                 description,
                 JsonConverter.serialize(images),
-                lastUpdatedAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT)),
+                lastUpdatedAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT)),
                 status.getStatusValue()
         };
     }
 
     @Override
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         lastUpdatedAt = date;
     }
 }

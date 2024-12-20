@@ -13,6 +13,7 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -70,7 +71,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
         items.forEach(x -> {
             x.setId(UUID.randomUUID());
             if (x instanceof DateUpdatable) {
-                ((DateUpdatable) x).setDate(LocalDate.now());
+                ((DateUpdatable) x).setDate(LocalDateTime.now());
             }
         });
         currentItems.addAll(items);
@@ -89,7 +90,7 @@ public abstract class BaseRepository<T extends BaseEntity> {
                 T obj = mapper(nextRecord);
                 if (obj.getId().equals(model.getId())) {
                     if (model instanceof DateUpdatable) {
-                        ((DateUpdatable) model).setDate(LocalDate.now());
+                        ((DateUpdatable) model).setDate(LocalDateTime.now());
                     }
                     current.add(model);
                     continue;
