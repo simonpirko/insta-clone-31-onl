@@ -15,7 +15,8 @@
     <title>Bootstrap demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link href="/css/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
 <body>
 <header class="navbar navbar-expand-lg bd-navbar sticky-top">
@@ -26,97 +27,115 @@
         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
     </nav>
 </header>
-<div class="container text-center">
+<div class="container text-center" x-data="scrollToTop">
     <div class="row align-items-start h-100">
         <div class="col-2">
 
         </div>
         <div x-data="posts" class="col">
-            <template x-if='!hasElements()'>
+            <template x-if="!showPosts()">
                 <div>No post to view</div>
             </template>
-            <template x-if='hasElements()'>
+            <template x-if="showPosts()">
 
                 <div class="card" style="width: 48rem">
-                    <div class="border border-left border-right px-0">
+                    <template x-for="post in pagedPosts">
+                        <div class="border border-left border-right px-0">
                         
                         <div class="d-flex p-3 border-bottom">
-                            <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp" class="rounded-circle"
+                            <img :src="post.user.photos[0]" class="rounded-circle"
                                  height="50" alt="Avatar" loading="lazy"/>
                             <div class="d-flex w-100 ps-3">
                                 <div>
-                                    <a href="">
+                                    <a :href="'/profile/'+ post.user.id">
                                         <h6 class="text-body">
-                                            Anna Doe
-                                            <span class="small text-muted font-weight-normal">@annadoe</span>
+                                            <span x-text="post.user.nickname"></span>
                                             <span class="small text-muted font-weight-normal"> • </span>
-                                            <span class="small text-muted font-weight-normal">7h</span>
+                                            <span x-text="howManyHours(post.date)" class="small text-muted font-weight-normal"></span>
                                             <span><i class="fas fa-angle-down float-end"></i></span>
                                         </h6>
                                     </a>
-                                    <p style="line-height: 1.2;">
-                                        Error cumque temporibus eum pariatur ducimus facere? Obcaecati fugit, nobis
-                                        eos <a href="">#deserunt</a> odit libero voluptatibus, iste laudantium,
-                                        tempore ratione ut.
-                                    </p>
+                                    <p x-text="post.description" style="line-height: 1.2;"></p>
 
 
-                                    <div id="carouselExample" class="col carousel slide">
+                                    <div :id="'carouselExample'+post.id" class="col carousel slide">
                                         <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
-                                                     loading="lazy" class="d-block w-100 img-fluid" width="586"
-                                                     height="731" alt="...">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
-                                                     loading="lazy" class="d-block w-100 img-fluid" width="586"
-                                                     height="731" alt="...">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp"
-                                                     loading="lazy" class="d-block w-100 img-fluid" width="586"
-                                                     height="731" alt="...">
-                                            </div>
+                                            <template x-if="post.images.length">
+                                                <template x-for="(image, index) in post.images">
+                                                    <div class="carousel-item"  :class="{ 'active': index === 0 }">
+                                                        <img :src="image"
+                                                             loading="lazy"
+                                                             class="d-block w-100 img-fluid" width="586"
+                                                             height="731" alt="..."/>
+                                                    </div>
+                                                </template>
+                                            </template>
+                                                <template x-if="!post.images.length">
+                                                    <div>
+                                                        NOT images to display
+                                                    </div>
+                                                </template>
                                         </div>
                                         <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#carouselExample" data-bs-slide="prev">
+                                                :data-bs-target="'#carouselExample'+post.id" data-bs-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Previous</span>
                                         </button>
                                         <button class="carousel-control-next" type="button"
-                                                data-bs-target="#carouselExample" data-bs-slide="next">
+                                                :data-bs-target="'#carouselExample'+post.id" data-bs-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="visually-hidden">Next</span>
                                         </button>
                                     </div>
 
 
+                                    <div style="margin-top: 10px">
                                     <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
-                                        <li>
-                                            <i class="far fa-comment"></i>
+                                        <li><i @click="alert('like')" class="bi bi-hand-thumbs-up"></i><span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
+                                            / <i @click="alert('dislike')" class="bi bi-hand-thumbs-down"></i><span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
                                         </li>
-                                        <li><i class="fas fa-retweet"></i><span class="small ps-2">11</span></li>
-                                        <li><i class="far fa-heart"></i><span class="small ps-2">65</span></li>
-                                        <li>
-                                            <i class="far fa-share-square"></i>
-                                        </li>
+                                        <li @click="alert('hello')"><i class="bi bi-chat-left-dots"></i><span x-text="post.comments.length" class="small ps-2"></span></li>
+
                                     </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
 
                     </div>
+                    </template>
                 </div>
             </template>
-
 
         </div>
         <div class="col-2">
         </div>
     </div>
 </div>
+
+<!--
+
+MODAL
+
+-->
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -127,40 +146,78 @@
 <script src="https://unpkg.com/alpinejs" defer></script>
 <script>
     document.addEventListener('alpine:init', () => {
+        Alpine.data('scrollToTop', () => ({
+
+            init() {
+
+            },
+        }));
         Alpine.data("posts", () => ({
-            filtredPost: [],
-            allPost: [],
+            pagedPosts: [],
             pager: {
-                currentPage: 1,
-                totalPages: 0,
-                pageSize: 10,
-                startIndex: 0,
-                endIndex: 0,
+                start:0,
+                count:50,
+                isEnd:false,
             },
             init() {
                 this.loaddata();
                 window.onscroll = () => {
                     this.scrollFunction();
-                };
+               };
+            },
+            howManyReactions(likes, like){
+                return likes.filter(function (x){
+                    return x.likeIt == like;
+                }).length;
             },
             scrollFunction(){
-                if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-                    console.log("> 50");
-                } else {
-                    console.log("< 50")
+                if(this.pager.isEnd)
+                {
+                    return;
+                }
+                const height = document.body.offsetHeight
+                const screenHeight = window.innerHeight
+
+                // Сколько пикселей уже проскроллили
+                const scrolled = window.scrollY
+
+                // Порог
+                const threshold = height - screenHeight / 4
+
+                // Низ экрана относительно страницы
+                const position = scrolled + screenHeight
+
+                if (position >= threshold && !this.pager.isEnd) {
+                    this.pager.start++;
+                    this.loaddata(this.pager.start);
                 }
             },
-            hasElements(){
-                return this.filtredPost.length > 0;
+            showPosts(){
+                return this.pagedPosts.length > 0
             },
-            loaddata() {
-                fetch('/api/post', {
+            isUserParticipationIn(id, userArray){
+                return userArray.some(x => x.id == id);
+            },
+            howManyHours(date){
+                return "a couple minutes ago.."
+            },
+            loaddata(page, count) {
+               let start = page === undefined ? 0 : page;
+               let elements = count === undefined ? 50 :this.pager.count;
+
+               let url = '/api/post?start='+start+'&count=' +elements;
+
+                fetch(url, {
                     method: 'GET'
                 })
                     .then(response => response.json())
                     .then(result => {
-                        this.allPost = result.content;
-                        console.log(this.allPost.length);
+                        this.pager.isEnd = !result.content || !result.content.length
+
+                        if(!this.pager.isEnd)
+                        {
+                            this.pagedPosts = [ ...this.pagedPosts, ...result.content ];
+                        }
                     })
                     .catch(resons => {
                         console.log("error");

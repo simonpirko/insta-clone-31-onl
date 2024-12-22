@@ -1,6 +1,6 @@
 package by.tms.instaclone31onl.core.constants;
 
-public class ServletConstants {
+public final class ServletConstants {
     public static final String LOGIN_SERVLET = "/login";
     public static final String AUTHORIZATION_SERVLET = "/authorization";
     public static final String POST_SERVLET = "/post";

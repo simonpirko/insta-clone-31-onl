@@ -48,11 +48,11 @@ public class FillServlet extends HttpServlet {
         List<User> userEntities = IntStream.range(1, 1000).boxed()
                 .map(x -> new User(null, "login" + x, "hash" + 1,
                         "nickname" + x, null, null,
-                        List.of("/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                                "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                                "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                                "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                                "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()))))
+                        List.of("https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp")))
                 .toList();
 
         //save data
@@ -62,13 +62,13 @@ public class FillServlet extends HttpServlet {
         //generation post
 
         Random random = new Random();
-        List<Post> postEntites = IntStream.range(1, 1000).boxed()
+        List<Post> postEntites = IntStream.range(1, 100).boxed()
                 .map(x->{
-                    List<String> images = List.of("/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                            "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                            "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                            "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()),
-                            "/images/login%d/%s.jpg".formatted(x, UUID.randomUUID()));
+                    List<String> images = List.of("https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp",
+                            "https://mdbcdn.b-cdn.net/img/new/standard/nature/184.webp",
+                            "https://mdbcdn.b-cdn.net/img/new/standard/nature/183.webp",
+                            "https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp",
+                            "https://mdbcdn.b-cdn.net/img/new/standard/nature/181.webp");
                     UUID userId = userIds.get(random.nextInt(userIds.size()));
                     return new Post(null, userId,
                             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",

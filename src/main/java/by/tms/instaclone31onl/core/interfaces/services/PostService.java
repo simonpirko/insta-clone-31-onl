@@ -8,5 +8,5 @@ import java.util.function.Predicate;
 
 public interface PostService {
 
-    List<PostDto> getAll(Predicate<Post> predicate);
+    List<PostDto> getPagedList(Predicate<Post> predicate, int start, int count);
 }

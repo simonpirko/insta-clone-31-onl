@@ -4,6 +4,7 @@ import by.tms.instaclone31onl.core.annotations.Entity;
 import by.tms.instaclone31onl.core.constants.DateTimeConstants;
 import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.entities.DateUpdatable;
+import by.tms.instaclone31onl.core.interfaces.entities.Sortable;
 import by.tms.instaclone31onl.core.utils.JsonConverter;
 import com.opencsv.bean.CsvBindByPosition;
 import org.reflections.serializers.JsonSerializer;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "posts", directories = "\\resources")
-public class Post extends BaseEntity implements DateUpdatable{
+public class Post extends BaseEntity implements DateUpdatable, Sortable {
     @CsvBindByPosition(position = 1)
     private final UUID userId;
     @CsvBindByPosition(position = 2)
@@ -52,9 +53,6 @@ public class Post extends BaseEntity implements DateUpdatable{
     public List<String> getImages() {
         return images;
     }
-    public LocalDateTime getLastUpdatedAt() {
-        return lastUpdatedAt;
-    }
     public PostStatus getStatus() {
         return status;
     }
@@ -83,5 +81,10 @@ public class Post extends BaseEntity implements DateUpdatable{
     @Override
     public void setDate(LocalDateTime date) {
         lastUpdatedAt = date;
+    }
+
+    @Override
+    public LocalDateTime getModificationDate() {
+        return lastUpdatedAt;
     }
 }

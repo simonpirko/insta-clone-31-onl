@@ -39,9 +39,8 @@ public class InstaPostService implements PostService {
 
 
     @Override
-    public List<PostDto> getAll(Predicate<Post> predicate) {
-        List<Post> posts = postRepository.getAllBy(predicate);
-
+    public List<PostDto> getPagedList(Predicate<Post> predicate, int start, int count) {
+        List<Post> posts = postRepository.getPagedList(predicate, start, count );
         List<PostDto> postDtos = new ArrayList<>();
 
         if (posts.isEmpty())
@@ -81,7 +80,7 @@ public class InstaPostService implements PostService {
 
             UserShortDto author = users.stream().filter(x -> x.id().equals(post.getUserId())).findFirst().orElse(null);
             PostDto postDto = new PostDto(post.getId(), author,
-                    post.getLastUpdatedAt(), post.getDescription(),
+                    post.getModificationDate(), post.getDescription(),
                     post.getImages(), postLikes, postComments);
             postDtos.add(postDto);
         }

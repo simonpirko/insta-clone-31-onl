@@ -1,6 +1,7 @@
 package by.tms.instaclone31onl.repositories;
 
 import by.tms.instaclone31onl.core.interfaces.entities.DateUpdatable;
+import by.tms.instaclone31onl.core.interfaces.entities.Sortable;
 import by.tms.instaclone31onl.core.models.csv.CsvTable;
 import by.tms.instaclone31onl.core.models.entities.BaseEntity;
 import com.opencsv.CSVReader;
@@ -15,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -127,7 +129,11 @@ public abstract class BaseRepository<T extends BaseEntity> {
         return toDelete;
     }
 
-    private void write(List<T> items, String path) {
+    protected void write(List<T> items, String path) {
+        T item = items.stream().findFirst().orElse(null);
+        if(item != null && item instanceof Sortable) {
+            items.sort((o1, o2) -> ((Sortable) o2).getModificationDate().compareTo(((Sortable) o1).getModificationDate()));
+        }
         try (CSVWriter csvWriter = new CSVWriter(new FileWriter(path))) {
             csvWriter.writeAll(items.stream().map(BaseEntity::getLine).collect(Collectors.toList()));
         } catch (IOException e) {
