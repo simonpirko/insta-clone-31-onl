@@ -9,5 +9,5 @@ public interface RepositoryFactory {
     PostRepository getPostRepository();
     UserRepository getUserRepository();
     CommentRepository getCommentRepository();
-    ReactionRepository getReactionFactory();
+    ReactionRepository getReactionRepository();
 }

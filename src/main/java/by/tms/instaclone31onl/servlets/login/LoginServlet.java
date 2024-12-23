@@ -26,8 +26,10 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
+
         String user = request.getParameter("usName");
         String password = request.getParameter("usPass");
+
         checkRegistration(response, request, out, user, password, session);
     }
 
