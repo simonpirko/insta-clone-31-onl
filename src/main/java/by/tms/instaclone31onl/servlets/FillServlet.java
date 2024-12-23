@@ -45,7 +45,7 @@ public class FillServlet extends HttpServlet {
         reactionRepository.delete(x->true);
         commentRepository.delete(x->true);
 
-        List<User> userEntities = IntStream.range(1, 1000).boxed()
+        List<User> userEntities = IntStream.range(1, 100).boxed()
                 .map(x -> new User(null, "login" + x, "hash" + 1,
                         "nickname" + x, null, null,
                         List.of("https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",

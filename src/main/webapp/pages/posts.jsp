@@ -19,15 +19,7 @@
 
 </head>
 <body>
-<header class="navbar navbar-expand-lg bd-navbar sticky-top">
-    <nav class="nav">
-        <a class="nav-link active" aria-current="page" href="#">Main</a>
-        <a class="nav-link" href="#">My posts</a>
-        <a class="nav-link" href="#">Profile</a>
-        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-    </nav>
-</header>
-<div class="container text-center" x-data="scrollToTop">
+<div class="container text-center">
     <div class="row align-items-start h-100">
         <div class="col-2">
 
@@ -47,7 +39,7 @@
                                  height="50" alt="Avatar" loading="lazy"/>
                             <div class="d-flex w-100 ps-3">
                                 <div>
-                                    <a :href="'/profile/'+ post.user.id">
+                                    <a :href="'/profile/'+ post.user.id" style="text-align:left">
                                         <h6 class="text-body">
                                             <span x-text="post.user.nickname"></span>
                                             <span class="small text-muted font-weight-normal"> • </span>
@@ -55,7 +47,7 @@
                                             <span><i class="fas fa-angle-down float-end"></i></span>
                                         </h6>
                                     </a>
-                                    <p x-text="post.description" style="line-height: 1.2;"></p>
+                                    <p x-text="post.description" style="line-height: 1.2;font-size:13px; text-align:left"></p>
 
 
                                     <div :id="'carouselExample'+post.id" class="col carousel slide">
@@ -95,7 +87,6 @@
                                             / <i @click="alert('dislike')" class="bi bi-hand-thumbs-down"></i><span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
                                         </li>
                                         <li @click="alert('hello')"><i class="bi bi-chat-left-dots"></i><span x-text="post.comments.length" class="small ps-2"></span></li>
-
                                     </ul>
                                     </div>
                                 </div>
@@ -114,44 +105,18 @@
     </div>
 </div>
 
-<!--
-
-MODAL
-
--->
-
-    <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Understood</button>
-            </div>
-        </div>
-    </div>
-
-
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.30.1/moment.min.js"
+        crossorigin="anonymous"></script>
+
 <script src="https://unpkg.com/alpinejs" defer></script>
 <script>
     document.addEventListener('alpine:init', () => {
-        Alpine.data('scrollToTop', () => ({
-
-            init() {
-
-            },
-        }));
         Alpine.data("posts", () => ({
             pagedPosts: [],
             pager: {
@@ -199,7 +164,22 @@ MODAL
                 return userArray.some(x => x.id == id);
             },
             howManyHours(date){
-                return "a couple minutes ago.."
+
+                var dateMomentObject = moment(date, "DD-MM-YYYY HH:mm:ss");
+                var dateObject = dateMomentObject.toDate();
+                const seconds = Math.floor((new Date().getTime() - new Date(dateObject).getTime()) / 1000)
+                let interval = seconds / 31536000
+                const rtf = new Intl.RelativeTimeFormat("en", { numeric: 'auto' })
+                if (interval > 1) { return rtf.format(-Math.floor(interval), 'year') }
+                interval = seconds / 2592000
+                if (interval > 1) { return rtf.format(-Math.floor(interval), 'month') }
+                interval = seconds / 86400
+                if (interval > 1) { return rtf.format(-Math.floor(interval), 'day') }
+                interval = seconds / 3600
+                if (interval > 1) { return rtf.format(-Math.floor(interval), 'hour') }
+                interval = seconds / 60
+                if (interval > 1) { return rtf.format(-Math.floor(interval), 'minute') }
+                return rtf.format(-Math.floor(interval), 'second')
             },
             loaddata(page, count) {
                let start = page === undefined ? 0 : page;
