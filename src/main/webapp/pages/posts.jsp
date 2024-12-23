@@ -119,6 +119,7 @@
     document.addEventListener('alpine:init', () => {
         Alpine.data("posts", () => ({
             pagedPosts: [],
+            isDataLoading : false,
             pager: {
                 start:0,
                 count:50,
@@ -152,7 +153,7 @@
                 // Низ экрана относительно страницы
                 const position = scrolled + screenHeight
 
-                if (position >= threshold && !this.pager.isEnd) {
+                if (position >= threshold && !this.pager.isEnd && !this.isDataLoading) {
                     this.pager.start++;
                     this.loaddata(this.pager.start);
                 }
@@ -187,6 +188,7 @@
 
                let url = '/api/post?start='+start+'&count=' +elements;
 
+               this.isDataLoading = true;
                 fetch(url, {
                     method: 'GET'
                 })
@@ -198,8 +200,11 @@
                         {
                             this.pagedPosts = [ ...this.pagedPosts, ...result.content ];
                         }
+
+                        this.isDataLoading = false;
                     })
                     .catch(resons => {
+                        this.isDataLoading = false;
                         console.log("error");
                     });
             }
