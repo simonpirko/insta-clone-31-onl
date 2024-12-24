@@ -3,12 +3,15 @@ package by.tms.instaclone31onl.core.models.entities;
 import by.tms.instaclone31onl.core.annotations.Entity;
 import by.tms.instaclone31onl.core.utils.JsonConverter;
 import com.opencsv.bean.CsvBindByPosition;
+import lombok.Builder;
+import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuperBuilder
 @Entity(name="users", directories = "\\resources")
 public class User extends BaseEntity {
     @CsvBindByPosition(position = 1)
