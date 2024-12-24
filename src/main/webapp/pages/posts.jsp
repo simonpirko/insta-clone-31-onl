@@ -83,10 +83,38 @@
 
                                     <div style="margin-top: 10px">
                                     <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
-                                        <li><i @click="alert('like')" class="bi bi-hand-thumbs-up"></i><span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
-                                            / <i @click="alert('dislike')" class="bi bi-hand-thumbs-down"></i><span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
+                                        <li>
+                                            <span @click="setReaction(post.likes, true, post.id)">
+                                            <template x-if="isUserParticipationInReaction(post.likes, true)">
+                                                <i class="bi bi-hand-thumbs-up-fill"></i>
+                                            </template>
+                                            <template x-if="!isUserParticipationInReaction(post.likes, true)">
+                                                <i class="bi bi-hand-thumbs-up"></i>
+                                            </template>
+                                            </span>
+                                            <span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
+                                            /
+                                            <span @click="setReaction(post.likes, false, post.id)">
+                                            <template x-if="isUserParticipationInReaction(post.likes, false)">
+                                                <i class="bi bi-hand-thumbs-down-fill"></i>
+                                            </template>
+                                            <template x-if="!isUserParticipationInReaction(post.likes, false)">
+                                                <i class="bi bi-hand-thumbs-down"></i>
+                                            </template>
+                                            </span>
+                                            <span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
                                         </li>
-                                        <li @click="alert('hello')"><i class="bi bi-chat-left-dots"></i><span x-text="post.comments.length" class="small ps-2"></span></li>
+
+                                        <li @click="showComments(post.id, post.comments)">
+                                            <template x-if="isUserParticipationInComment(post.comments)">
+                                                <i  class="bi bi-chat-left-dots-fill"></i>
+                                            </template>
+                                            <template x-if="!isUserParticipationInComment(post.comments)">
+                                                <i class="bi bi-chat-left-dots"></i>
+                                            </template>
+
+                                            <span x-text="post.comments.length" class="small ps-2"></span>
+                                        </li>
                                     </ul>
                                     </div>
                                 </div>
@@ -98,12 +126,64 @@
                     </template>
                 </div>
             </template>
+            <!--modal-->
+            <div class="modal" id="modal-commets" tabindex="-1">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Post comments</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <template x-if="!modal.comments">
+                                <p>No comments to view</p>
+                            </template>
+                            <template x-if="modal.comments">
+                                <template x-for="comment in modal.comments">
+                                    <div style="margin-bottom: 10px; text-align: left; font-size:13px;">
+                                        <div class="row">
+                                            <div class="col-1">
+                                                <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
+                                            </div>
+                                            <div class="col">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <span x-text="comment.author.nickname"></span>
+                                                    <span class="small text-muted font-weight-normal"> • </span>
+                                                    <span x-text="howManyHours(comment.date)" class="small text-muted font-weight-normal"></span>
+                                                </div>
+                                            </div>
+                                                <div class="row">
+                                                    <div class="col" x-text="comment.text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </template>
 
+                        </div>
+                        <div class="modal-footer row">
+
+                                <div class="col">
+                                    <textarea style="width:100%; resize: none;" class="form-control" id="comment_text" rows="3"></textarea>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" @click="sendComment()" class="btn btn-primary">Send</button>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-2">
         </div>
     </div>
 </div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -116,10 +196,19 @@
 
 <script src="https://unpkg.com/alpinejs" defer></script>
 <script>
+
     document.addEventListener('alpine:init', () => {
         Alpine.data("posts", () => ({
+
             pagedPosts: [],
             isDataLoading : false,
+            fakeUserId:'6d0b0af1-db7a-451a-8fda-8cad70541f1d',
+            modal : {
+                window:undefined,
+                postId:undefined,
+                textarea:undefined,
+                comments:[]
+            },
             pager: {
                 start:0,
                 count:50,
@@ -127,14 +216,79 @@
             },
             init() {
                 this.loaddata();
+
+                let modalElement = document.getElementById('modal-commets');
+                this.modal.window = new bootstrap.Modal(modalElement);
+                this.modal.textarea = document.getElementById("comment_text");
+                modalElement.addEventListener('hide.bs.modal', function(){
+                    document.getElementById("comment_text").value = '';
+
+                });
                 window.onscroll = () => {
                     this.scrollFunction();
                };
             },
-            howManyReactions(likes, like){
+            separateReaction(likes,like){
                 return likes.filter(function (x){
                     return x.likeIt == like;
-                }).length;
+                });
+            },
+            setReaction(likes, like,postId){
+                let post = this.pagedPosts.find(x=>x.id === postId);
+                if(post == undefined || post == null){
+                    return;
+                }
+
+                let userLike = post.likes.find(u=>u.user.id == this.fakeUserId);
+
+                if(userLike === undefined){
+                    //Create new
+                    let mocklike = {
+                        user:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
+                        id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
+                        likeIt: like
+                    }
+                    post.likes.push(mocklike);
+                    return;
+                }
+
+                if(userLike.likeIt == like){
+                    //DELETE
+
+                    post.likes = post.likes.filter(x=>x.user.id != this.fakeUserId);
+
+                }
+                else{
+                    //UPDATE
+                    userLike.likeIt = like;
+                }
+            },
+            howManyReactions(likes, like){
+                return this.separateReaction(likes,like).length;
+            },
+            sendComment(){
+                console.log(this.modal.postId);
+                console.log(this.modal.textarea.value);
+
+                //todo send
+
+                this.setComments(this.modal.textarea.value)
+                this.modal.textarea.value = '';
+            },
+            setComments(comment){
+                //mock
+                let com = {
+                    author:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
+                    date: "24-12-2024 12:45:08",
+                    id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
+                    text: comment
+                }
+                this.modal.comments.push(com);
+            },
+            showComments(id, comments){
+                this.modal.postId = id;
+                this.modal.comments = comments;
+                this.modal.window.show();
             },
             scrollFunction(){
                 if(this.pager.isEnd)
@@ -161,8 +315,11 @@
             showPosts(){
                 return this.pagedPosts.length > 0
             },
-            isUserParticipationIn(id, userArray){
-                return userArray.some(x => x.id == id);
+            isUserParticipationInComment(comments){
+                return comments.some(u=> u.author.id == this.fakeUserId);
+            },
+            isUserParticipationInReaction(reactions, like){
+                return reactions.some(u=>u.user.id == this.fakeUserId && u.likeIt == like)
             },
             howManyHours(date){
 
