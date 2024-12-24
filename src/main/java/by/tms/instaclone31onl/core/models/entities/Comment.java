@@ -2,6 +2,7 @@ package by.tms.instaclone31onl.core.models.entities;
 
 import by.tms.instaclone31onl.core.annotations.Entity;
 import by.tms.instaclone31onl.core.constants.DateTimeConstants;
+import by.tms.instaclone31onl.core.interfaces.entities.DateUpdatable;
 import com.opencsv.bean.CsvBindByPosition;
 
 import java.time.LocalDate;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @Entity(name = "comments", directories = "\\resources")
-public class Comment extends BaseEntity {
+public class Comment extends BaseEntity implements DateUpdatable {
     @CsvBindByPosition(position = 1)
     private final UUID postId;
     @CsvBindByPosition(position = 2)
@@ -18,13 +19,13 @@ public class Comment extends BaseEntity {
     @CsvBindByPosition(position = 3)
     private final String text;
     @CsvBindByPosition(position = 4)
-    private final LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     public Comment(UUID id,
                    UUID postId,
                    String text,
                    UUID userId,
-                   LocalDate createdAt) {
+                   LocalDateTime createdAt) {
         super(id);
         this.postId = postId;
         this.text = text;
@@ -44,7 +45,7 @@ public class Comment extends BaseEntity {
         return text;
     }
 
-    public LocalDate getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
@@ -54,7 +55,7 @@ public class Comment extends BaseEntity {
                 UUID.fromString(line[1]),
                 line[2],
                 UUID.fromString(line[3]),
-                LocalDate.parse(line[4], DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT)));
+                LocalDateTime.parse(line[4], DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT)));
     }
 
     @Override
@@ -64,7 +65,12 @@ public class Comment extends BaseEntity {
                 String.valueOf(postId),
                 text,
                 String.valueOf(userId),
-                createdAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT))
+                createdAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT))
         };
+    }
+
+    @Override
+    public void setDate(LocalDateTime date) {
+        createdAt = date;
     }
 }

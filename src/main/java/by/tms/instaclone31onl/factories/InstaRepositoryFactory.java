@@ -41,7 +41,7 @@ public class InstaRepositoryFactory implements RepositoryFactory {
     }
 
     @Override
-    public ReactionRepository getReactionFactory() {
+    public ReactionRepository getReactionRepository() {
         return new InstaReactionRepository(csvContext.getCsvTable(Reaction.class));
     }
 

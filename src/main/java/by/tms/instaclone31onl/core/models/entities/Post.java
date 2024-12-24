@@ -4,6 +4,7 @@ import by.tms.instaclone31onl.core.annotations.Entity;
 import by.tms.instaclone31onl.core.constants.DateTimeConstants;
 import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.entities.DateUpdatable;
+import by.tms.instaclone31onl.core.interfaces.entities.Sortable;
 import by.tms.instaclone31onl.core.utils.JsonConverter;
 import com.opencsv.bean.CsvBindByPosition;
 import org.reflections.serializers.JsonSerializer;
@@ -11,13 +12,14 @@ import org.reflections.serializers.JsonSerializer;
 import javax.swing.text.DateFormatter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "posts", directories = "\\resources")
-public class Post extends BaseEntity implements DateUpdatable{
+public class Post extends BaseEntity implements DateUpdatable, Sortable {
     @CsvBindByPosition(position = 1)
     private final UUID userId;
     @CsvBindByPosition(position = 2)
@@ -25,7 +27,7 @@ public class Post extends BaseEntity implements DateUpdatable{
     @CsvBindByPosition(position = 3)
     private List<String> images;
     @CsvBindByPosition(position = 4)
-    private LocalDate lastUpdatedAt;
+    private LocalDateTime lastUpdatedAt;
     @CsvBindByPosition(position = 5)
     private final PostStatus status;
 
@@ -33,7 +35,7 @@ public class Post extends BaseEntity implements DateUpdatable{
                 UUID userId,
                 String description,
                 List<String> images,
-                LocalDate lastUpdatedAt,
+                LocalDateTime lastUpdatedAt,
                 PostStatus status) {
         super(id);
         this.userId = userId;
@@ -51,9 +53,6 @@ public class Post extends BaseEntity implements DateUpdatable{
     public List<String> getImages() {
         return images;
     }
-    public LocalDate getLastUpdatedAt() {
-        return lastUpdatedAt;
-    }
     public PostStatus getStatus() {
         return status;
     }
@@ -64,7 +63,7 @@ public class Post extends BaseEntity implements DateUpdatable{
                 UUID.fromString(line[1]),
                 line[2],
                 images,
-                LocalDate.parse(line[4],DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT)),
+                LocalDateTime.parse(line[4],DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT)),
                 PostStatus.getStatusByValue(line[5]));
     }
     @Override
@@ -74,13 +73,18 @@ public class Post extends BaseEntity implements DateUpdatable{
                 String.valueOf(userId),
                 description,
                 JsonConverter.serialize(images),
-                lastUpdatedAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FORMAT)),
+                lastUpdatedAt.format(DateTimeFormatter.ofPattern(DateTimeConstants.DATE_TIME_FULL_FORMAT)),
                 status.getStatusValue()
         };
     }
 
     @Override
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         lastUpdatedAt = date;
+    }
+
+    @Override
+    public LocalDateTime getModificationDate() {
+        return lastUpdatedAt;
     }
 }

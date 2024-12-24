@@ -36,16 +36,16 @@ public class Reaction extends BaseEntity {
     @Override
     public String[] getLine() {
         return new String[]{
+                String.valueOf(id),
                 String.valueOf(postId),
                 String.valueOf(userId),
-                String.valueOf(likeIt),
-                String.valueOf(id),
+                String.valueOf(likeIt)
         };
     }
     public static Reaction fromLine(String[] line) {
         return new Reaction(UUID.fromString(line[0]),
                 UUID.fromString(line[1]),
-                Boolean.parseBoolean(line[2]),
-                UUID.fromString(line[3]));
+                Boolean.parseBoolean(line[3]),
+                UUID.fromString(line[2]));
     }
 }
