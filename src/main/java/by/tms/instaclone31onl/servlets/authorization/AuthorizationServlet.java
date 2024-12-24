@@ -24,11 +24,13 @@ public class AuthorizationServlet extends HttpServlet {
         serviceFactory = InstaServiceFactory.getInstance();
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/pages/authorization.jsp").forward(request, response);
     }
 
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html");
@@ -50,7 +52,7 @@ public class AuthorizationServlet extends HttpServlet {
     }
 
     public void checkingForCompletion(HttpServletRequest request, HttpServletResponse response,
-                                       PrintWriter out) throws IOException, ServletException {
+                                      PrintWriter out) throws IOException, ServletException {
         if (request.getParameter("aPass").isEmpty() || request.getParameter("aPassCopy").isEmpty() ||
                 request.getParameter("aName").isEmpty()) {
             RequestDispatcher rd = request.getRequestDispatcher("pages/authorization.jsp");
