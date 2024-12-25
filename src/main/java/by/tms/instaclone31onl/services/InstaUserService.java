@@ -21,7 +21,7 @@ public class InstaUserService implements UserService {
         return user != null;
     }
 
-    public boolean checkRegistr(String login, String password){
+    public boolean checkRegistration(String login, String password){
         List<UUID> user = this.userRepository.insert(List.of(User.builder().login(login).hash(password).build()));
         return !user.isEmpty();
     }
