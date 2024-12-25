@@ -1,4 +1,3 @@
-<%@ page import="by.tms.instaclone31onl.core.models.entities.User" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
@@ -86,7 +85,7 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">
-                    Username
+                    <p>${currentUser.nickname}</p>
                 </h5>
                 <img src="https://cdn.promptden.com/images/ecafe40a-e36a-4ace-8f4a-fcc4640f44b7.jpg" alt="Фото профиля"
                      width="160">

@@ -31,4 +31,8 @@ public class InstaUserService implements UserService {
         return user != null;
     }
 
+    @Override
+    public void editUser(User user) {
+
+    }
 }
