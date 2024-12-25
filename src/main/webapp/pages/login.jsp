@@ -21,7 +21,7 @@
                 <input type="submit" class="btn btn-primary w-100 py-2" value="Вход">
                 </div>
             </form>
-            <a href="/authorization" class="btn btn-outline-secondary w-100 py-2" tabindex="-1" role="button" aria-disabled="true">Регистрация</a>
+            <a href="/registration" class="btn btn-outline-secondary w-100 py-2" tabindex="-1" role="button" aria-disabled="true">Регистрация</a>
 
         </div>
     </div>
