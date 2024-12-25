@@ -5,11 +5,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 
 @Getter
-public class Logic {
+public class BaseLogic {
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public Logic(HttpServletRequest request, HttpServletResponse response) {
+    public BaseLogic(HttpServletRequest request, HttpServletResponse response) {
         this.request = request;
         this.response = response;
     }

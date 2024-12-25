@@ -3,16 +3,16 @@ package by.tms.instaclone31onl.servlets.login;
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
 import by.tms.instaclone31onl.factories.InstaRepositoryFactory;
-import by.tms.instaclone31onl.servlets.base.Logic;
+import by.tms.instaclone31onl.servlets.base.BaseLogic;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-public class LoginLogic  extends Logic {
+public class LoginBaseLogic extends BaseLogic {
 
-    public LoginLogic(HttpServletRequest request, HttpServletResponse response) {
+    public LoginBaseLogic(HttpServletRequest request, HttpServletResponse response) {
         super(request, response);
     }
 

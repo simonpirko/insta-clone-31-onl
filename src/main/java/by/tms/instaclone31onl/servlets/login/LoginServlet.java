@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("usPass");
 
         if (serviceFactory.getUserService().checkUser(login, password)) {
-            new LoginLogic(request, response).goToProfilePage(login);
+            new LoginBaseLogic(request, response).goToProfilePage(login);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("pages/login.jsp");
             response.getWriter().println("<div align='center' style='color: red'>Неправильный логин или пароль</div>");

@@ -20,6 +20,6 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html");
-        new RegistrationLogic(request, response).checkingForCompletion();
+        new RegistrationBaseLogic(request, response).checkingForCompletion();
     }
 }
