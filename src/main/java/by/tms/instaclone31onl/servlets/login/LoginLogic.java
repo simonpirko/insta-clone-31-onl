@@ -4,7 +4,6 @@ import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
 import by.tms.instaclone31onl.factories.InstaRepositoryFactory;
 import by.tms.instaclone31onl.servlets.base.Logic;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
