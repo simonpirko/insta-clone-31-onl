@@ -8,12 +8,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-public class AuthorizationLogic {
+public class RegistrationLogic {
     private ServiceFactory serviceFactory;
     private HttpServletRequest request;
     private HttpServletResponse response;
 
-    public AuthorizationLogic(ServiceFactory serviceFactory, HttpServletRequest request, HttpServletResponse response) {
+    public RegistrationLogic(ServiceFactory serviceFactory, HttpServletRequest request, HttpServletResponse response) {
         this.serviceFactory = serviceFactory;
         this.request = request;
         this.response = response;
@@ -40,6 +40,6 @@ public class AuthorizationLogic {
 
     private void printMessage(String message) throws IOException, ServletException {
         response.getWriter().println("<div align='center' style='color: red'>" + message + "</div>");
-        request.getRequestDispatcher("pages/authorization.jsp").include(request, response);
+        request.getRequestDispatcher("pages/registration.jsp").include(request, response);
     }
 }
