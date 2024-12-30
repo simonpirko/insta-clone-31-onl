@@ -27,7 +27,7 @@ public class RegistrationBaseLogic extends BaseLogic {
             if (serviceFactory.getUserService().checkLogin(getRequest().getParameter("aName"))) {
                 printMessage("Такое имя пользователя уже существует");
             } else {
-                if (serviceFactory.getUserService().checkRegistration(getRequest().getParameter("aName"), getRequest().getParameter("aPass"))) {
+                if (serviceFactory.getUserService().saveUser(getRequest().getParameter("aName"), getRequest().getParameter("aPass"))) {
                     new LoginBaseLogic(getRequest(), getResponse()).goToProfilePage(getRequest().getParameter("aName"));
                 } else {
                     printMessage("Пароли не совпадают");

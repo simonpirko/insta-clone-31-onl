@@ -4,6 +4,7 @@ import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
 import by.tms.instaclone31onl.core.interfaces.services.UserService;
 import by.tms.instaclone31onl.core.models.entities.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,12 +18,14 @@ public class InstaUserService implements UserService {
     }
 
     public boolean checkUser(String login, String password) {
-        User user = this.userRepository.getBy(u->u.getLogin().equals(login) && u.getHash().equals(password));
+        User user = this.userRepository.getBy(u->u.getLogin().equals(login) && BCrypt.checkpw(password, u.getHash()));
         return user != null;
     }
 
-    public boolean checkRegistration(String login, String password){
-        List<UUID> user = this.userRepository.insert(List.of(User.builder().login(login).hash(password).build()));
+    public boolean saveUser(String login, String password){
+        String salt = BCrypt.gensalt();
+        String hash = BCrypt.hashpw(password, salt);
+        List<UUID> user = this.userRepository.insert(List.of(User.builder().login(login).hash(hash).build()));
         return !user.isEmpty();
     }
 
