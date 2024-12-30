@@ -2,10 +2,6 @@ package by.tms.instaclone31onl.factories;
 
 import by.tms.instaclone31onl.core.interfaces.factories.RepositoryFactory;
 import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
-import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.PostRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.ReactionRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
 import by.tms.instaclone31onl.core.interfaces.services.CommentService;
 import by.tms.instaclone31onl.core.interfaces.services.PostService;
 import by.tms.instaclone31onl.core.interfaces.services.ReactionService;
@@ -34,23 +30,22 @@ public class InstaServiceFactory implements ServiceFactory{
 
     @Override
     public PostService getPostService() {
-        PostRepository postRepository = repositoryFactory.getPostRepository();
-        CommentRepository commentRepository = repositoryFactory.getCommentRepository();
-        UserRepository userRepository = repositoryFactory.getUserRepository();
-        ReactionRepository reactionRepository = repositoryFactory.getReactionRepository();
-        return new InstaPostService(postRepository, userRepository, commentRepository, reactionRepository);
+        return new InstaPostService(
+                repositoryFactory.getPostRepository(),
+                repositoryFactory.getUserRepository(),
+                repositoryFactory.getCommentRepository(),
+                repositoryFactory.getReactionRepository());
     }
 
     @Override
     public CommentService getCommentService() {
-        CommentRepository commentRepository = repositoryFactory.getCommentRepository();
-        return new InstaCommentService(commentRepository);
+        return new InstaCommentService(repositoryFactory.getCommentRepository());
     }
 
     @Override
     public UserService getUserService() {
-        UserRepository userRepository = repositoryFactory.getUserRepository();
-        CommentRepository commentRepository = repositoryFactory.getCommentRepository();
-        return new InstaUserService(userRepository, commentRepository);
+        return new InstaUserService(
+                repositoryFactory.getUserRepository(),
+                repositoryFactory.getCommentRepository());
     }
 }
