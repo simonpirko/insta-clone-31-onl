@@ -24,12 +24,15 @@ public class RegistrationFilter {
                 StringUtils.isEmpty(passCopy)) {
             return "Заполните все поля";
         } else {
-            User user = serviceFactory.getUserService().getUser(login, pass);
-            if (Objects.isNull(user)) {
-                serviceFactory.getUserService().insertUser(login, pass);
-                return null;
+            if (pass.equals(passCopy)) {
+                User user = serviceFactory.getUserService().getUser(login, pass);
+                if (Objects.isNull(user)) {
+                    serviceFactory.getUserService().insertUser(login, pass);
+                    return null;
+                }
+                return "Такой пользователь уже существует";
             }
-            return "Данные введены некорректно";
+            return "Пароли не совпадают";
         }
     }
 }
