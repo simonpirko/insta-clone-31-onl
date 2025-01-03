@@ -2,6 +2,8 @@ package by.tms.instaclone31onl.servlets.login;
 
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
+import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
+import by.tms.instaclone31onl.factories.InstaRepositoryFactory;
 import by.tms.instaclone31onl.factories.InstaServiceFactory;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -34,7 +36,9 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("usPass");
 
         if (serviceFactory.getUserService().checkUser(login, password)) {
-            new LoginBaseLogic(request, response).goToProfilePage(login);
+            UserRepository userRepository = InstaRepositoryFactory.getInstance().getUserRepository();
+            request.getSession().setAttribute("currentUser", userRepository.getUserByLogin(request.getParameter("aName")));
+            response.sendRedirect(ServletConstants.PROFILE_SERVLET);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("pages/login.jsp");
             response.getWriter().println("<div align='center' style='color: red'>Неправильный логин или пароль</div>");

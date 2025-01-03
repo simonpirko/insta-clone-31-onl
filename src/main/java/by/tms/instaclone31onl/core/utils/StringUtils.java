@@ -1,12 +1,15 @@
 package by.tms.instaclone31onl.core.utils;
 
+import java.util.Objects;
+
 public class StringUtils {
 
     public static boolean isNotEmpty(String str) {
-        return str != null && !str.isEmpty();
+
+        return Objects.nonNull(str) && !str.isEmpty();
     }
 
     public static boolean isEmpty(String str) {
-        return str == null || str.isEmpty();
+        return Objects.isNull(str) || str.isEmpty();
     }
 }
