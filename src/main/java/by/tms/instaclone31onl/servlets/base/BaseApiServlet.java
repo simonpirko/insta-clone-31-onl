@@ -5,6 +5,7 @@ import by.tms.instaclone31onl.core.constants.ContentTypeConstants;
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.exceptions.NotImplementServletMethodException;
 import by.tms.instaclone31onl.core.models.api.InstaResponse;
+import by.tms.instaclone31onl.core.models.entities.User;
 import by.tms.instaclone31onl.core.utils.FileUtils;
 import by.tms.instaclone31onl.core.utils.JsonConverter;
 import jakarta.servlet.ServletException;
@@ -13,11 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload2.core.DiskFileItem;
 import org.apache.commons.fileupload2.core.DiskFileItemFactory;
-import org.apache.commons.fileupload2.core.FileUploadException;
 import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 
-import java.io.*;
-import java.nio.file.Files;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,15 @@ import java.util.UUID;
 import static by.tms.instaclone31onl.core.constants.AppConstants.FILES_ORIGIN_PATH;
 
 public class BaseApiServlet extends HttpServlet {
-
+    protected User currentUser;
     private final String FILE_NAME_FORMAT = "%s.%s";
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        currentUser = (User) req.getSession().getAttribute("currentUser");
+        super.service(req, resp);
+    }
+
     private void response(HttpServletResponse resp, int status, String body, String contentType) throws IOException {
         resp.setContentType(contentType);
         resp.setCharacterEncoding("UTF-8");
@@ -64,7 +72,7 @@ public class BaseApiServlet extends HttpServlet {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 
-    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 

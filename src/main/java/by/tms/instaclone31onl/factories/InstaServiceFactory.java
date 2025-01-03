@@ -38,9 +38,7 @@ public class InstaServiceFactory implements ServiceFactory{
 
     @Override
     public UserService getUserService() {
-        return new InstaUserService(
-                repositoryFactory.getUserRepository(),
-                repositoryFactory.getCommentRepository());
+        return new InstaUserService(repositoryFactory.getUserRepository());
     }
 
     @Override

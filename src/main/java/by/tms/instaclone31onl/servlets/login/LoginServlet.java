@@ -2,6 +2,7 @@ package by.tms.instaclone31onl.servlets.login;
 
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
+import by.tms.instaclone31onl.core.models.entities.User;
 import by.tms.instaclone31onl.factories.InstaServiceFactory;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -11,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @WebServlet(ServletConstants.LOGIN_SERVLET)
 public class LoginServlet extends HttpServlet {
@@ -33,8 +35,11 @@ public class LoginServlet extends HttpServlet {
         String login = request.getParameter("usName");
         String password = request.getParameter("usPass");
 
-        if (serviceFactory.getUserService().checkUser(login, password)) {
-            new LoginBaseLogic(request, response).goToProfilePage(login);
+        User user = serviceFactory.getUserService().getUser(login, password);
+
+        if (!Objects.isNull(user)) {
+            request.getSession().setAttribute("currentUser", user);
+            response.sendRedirect(ServletConstants.PROFILE_SERVLET);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("pages/login.jsp");
             response.getWriter().println("<div align='center' style='color: red'>Неправильный логин или пароль</div>");
