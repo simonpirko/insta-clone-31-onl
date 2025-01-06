@@ -52,7 +52,7 @@
                             <span class="ms-1 d-none d-sm-inline">Уведомления</span></a>
                     </li>
                     <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                        <a href="#submenu2" data-bs-toggle="modal" data-bs-target="#postModal" class="nav-link px-0 align-middle ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-plus-square" viewBox="0 0 16 16">
                                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -61,6 +61,31 @@
                             <span class="ms-1 d-none d-sm-inline">Опубликовать запись</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu"></ul>
                     </li>
+                    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="postModalLabel">Создать новую публикацию</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Выберите изображение</label>
+                                            <input class="form-control" type="file" id="formFile">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="caption" class="form-label">Подпись</label>
+                                            <textarea class="form-control" id="caption" rows="3" placeholder="Добавьте подпись..."></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary w-100">Опубликовать</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <li>
                         <a href="#" class="nav-link px-0 align-middle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
