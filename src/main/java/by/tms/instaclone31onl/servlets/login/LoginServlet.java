@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
 
         User user = serviceFactory.getUserService().getUser(login, password);
 
-        if (!Objects.isNull(user)) {
+        if (Objects.nonNull(user)) {
             request.getSession().setAttribute("currentUser", user);
             response.sendRedirect(ServletConstants.PROFILE_SERVLET);
         } else {
