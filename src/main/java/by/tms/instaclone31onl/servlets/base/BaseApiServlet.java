@@ -1,6 +1,7 @@
 package by.tms.instaclone31onl.servlets.base;
 
 import by.tms.instaclone31onl.core.constants.AppConstants;
+import by.tms.instaclone31onl.core.constants.AttributeConstants;
 import by.tms.instaclone31onl.core.constants.ContentTypeConstants;
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.exceptions.NotImplementServletMethodException;
@@ -32,7 +33,7 @@ public class BaseApiServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        currentUser = (User) req.getSession().getAttribute("currentUser");
+        currentUser = (User) req.getSession().getAttribute(AttributeConstants.CURRENT_USER);
         super.service(req, resp);
     }
 
