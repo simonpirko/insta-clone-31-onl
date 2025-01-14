@@ -52,7 +52,7 @@
                             <span class="ms-1 d-none d-sm-inline">Уведомления</span></a>
                     </li>
                     <li>
-                        <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                        <a href="#submenu2" data-bs-toggle="modal" data-bs-target="#postModal" class="nav-link px-0 align-middle ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                  class="bi bi-plus-square" viewBox="0 0 16 16">
                                 <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
@@ -61,6 +61,31 @@
                             <span class="ms-1 d-none d-sm-inline">Опубликовать запись</span></a>
                         <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu"></ul>
                     </li>
+                    <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="postModalLabel">Создать новую публикацию</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Выберите изображение</label>
+                                            <input class="form-control" type="file" id="formFile">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="caption" class="form-label">Подпись</label>
+                                            <textarea class="form-control" id="caption" rows="3" placeholder="Добавьте подпись..."></textarea>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-primary w-100">Опубликовать</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <li>
                         <a href="#" class="nav-link px-0 align-middle">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -70,12 +95,26 @@
                             </svg>
                             <span class="ms-1 d-none d-sm-inline">Редактировать профиль</span> </a>
                     </li>
+
                     <li>
                         <a href="#" class="nav-link px-0 align-middle">
                             <img src="https://cdn.promptden.com/images/ecafe40a-e36a-4ace-8f4a-fcc4640f44b7.jpg"
                                  alt="Фото профиля" width="70">
                             <span class="ms-1 d-none d-sm-inline">Профиль</span> </a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/logout" class="nav-link px-0 align-middle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M6.354 3.646a.5.5 0 0 1 0 .708L3.207 7.5H13.5a.5.5 0 0 1 0 1H3.207l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                                <path fill-rule="evenodd"
+                                      d="M11.5 13a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
+                            </svg>
+                            <span class="ms-1 d-none d-sm-inline">Выйти</span>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>

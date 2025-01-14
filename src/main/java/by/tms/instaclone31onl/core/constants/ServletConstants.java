@@ -13,5 +13,5 @@ public final class ServletConstants {
     public static final String EDIT_PROFILE_SERVLET = "/edit";
     public static final String FIlE_SERVLET = "/file";
     public static final String FILE_SERVLET_URL_PATTERN =  "/file/*";
-    public static final List<String> UNAUTHORIZED_URLS = List.of(LOGIN_SERVLET, REGISTRATION_SERVLET);
+    public static final String LOGOUT_SERVLET = "/logout";
 }
