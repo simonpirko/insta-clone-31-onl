@@ -1,5 +1,6 @@
 package by.tms.instaclone31onl.servlets.login;
 
+import by.tms.instaclone31onl.core.constants.AttributeConstants;
 import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
 import by.tms.instaclone31onl.core.models.entities.User;
@@ -25,6 +26,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         request.getRequestDispatcher("/pages/login.jsp").forward(request, response);
     }
 
@@ -37,8 +39,8 @@ public class LoginServlet extends HttpServlet {
 
         User user = serviceFactory.getUserService().getUser(login, password);
 
-        if (!Objects.isNull(user)) {
-            request.getSession().setAttribute("currentUser", user);
+        if (Objects.nonNull(user)) {
+            request.getSession().setAttribute(AttributeConstants.CURRENT_USER, user);
             response.sendRedirect(ServletConstants.PROFILE_SERVLET);
         } else {
             RequestDispatcher rd = request.getRequestDispatcher("pages/login.jsp");
