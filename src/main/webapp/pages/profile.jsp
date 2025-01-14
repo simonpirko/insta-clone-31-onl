@@ -95,12 +95,26 @@
                             </svg>
                             <span class="ms-1 d-none d-sm-inline">Редактировать профиль</span> </a>
                     </li>
+
                     <li>
                         <a href="#" class="nav-link px-0 align-middle">
                             <img src="https://cdn.promptden.com/images/ecafe40a-e36a-4ace-8f4a-fcc4640f44b7.jpg"
                                  alt="Фото профиля" width="70">
                             <span class="ms-1 d-none d-sm-inline">Профиль</span> </a>
                     </li>
+                    <li>
+                        <a href="${pageContext.request.contextPath}/logout" class="nav-link px-0 align-middle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                      d="M6.354 3.646a.5.5 0 0 1 0 .708L3.207 7.5H13.5a.5.5 0 0 1 0 1H3.207l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0z"/>
+                                <path fill-rule="evenodd"
+                                      d="M11.5 13a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 1 0v11a.5.5 0 0 1-.5.5z"/>
+                            </svg>
+                            <span class="ms-1 d-none d-sm-inline">Выйти</span>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
