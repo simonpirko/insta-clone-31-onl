@@ -13,7 +13,7 @@ public class LogoutServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate(); // завершение сеанса
-        response.sendRedirect("/insta_clone_31_onl_war_exploded/pages/login.jsp");  // переход на страницу входа
+        response.sendRedirect(ServletConstants.LOGIN_SERVLET);  // переход на страницу входа
     }
 }
 
