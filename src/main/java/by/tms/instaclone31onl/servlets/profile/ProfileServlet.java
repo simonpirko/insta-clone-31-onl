@@ -1,8 +1,8 @@
 package by.tms.instaclone31onl.servlets.profile;
 
+import by.tms.instaclone31onl.servlets.base.BaseApiServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import by.tms.instaclone31onl.core.constants.ServletConstants;
@@ -11,7 +11,7 @@ import java.io.IOException;
 
 
 @WebServlet(ServletConstants.PROFILE_SERVLET)
-public class ProfileServlet extends HttpServlet {
+public class ProfileServlet extends BaseApiServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
