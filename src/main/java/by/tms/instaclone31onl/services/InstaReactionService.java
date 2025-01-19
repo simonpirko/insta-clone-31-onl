@@ -24,28 +24,26 @@ public class InstaReactionService implements ReactionService {
         this.userRepository = userRepository;
     }
 
-
     @Override
-    public ReactionDto addReaction(UUID postId, Boolean likeIt) {
+    public ReactionDto addReaction(User currentUser, UUID postId, Boolean likeIt) {
         Post post = postRepository.getBy(p -> p.getId().equals(postId));
-        List<UUID> reactionsId = reactionRepository.insert(List.of(new Reaction(null, postId, likeIt, post.getUserId()))); // Откуда взять UUID при добавлении?
-        User user = userRepository.getBy(u -> u.getId().equals(post.getUserId()));
+        List<UUID> reactionsId = reactionRepository.insert(List.of(new Reaction(null, postId, likeIt, post.getUserId())));
 
-        return new ReactionDto(reactionsId.getFirst(), new UserShortDto(user.getId(), user.getNickname(), user.getPhotos()), likeIt);
+        return new ReactionDto(reactionsId.getFirst(), new UserShortDto(currentUser.getId(), currentUser.getNickname(), currentUser.getPhotos()), likeIt);
     }
 
+
     @Override
-    public ReactionDto editReaction(UUID reactionId, Boolean likeIt) {
+    public ReactionDto editReaction(User currentUser, UUID reactionId, Boolean likeIt) {
         Reaction oldReaction = reactionRepository.getBy(reaction -> reaction.getId().equals(reactionId));
         Post post = postRepository.getBy(p -> p.getId().equals(oldReaction.getPostId()));
-        Reaction updatedReaction = reactionRepository.update(new Reaction(null, reactionId, likeIt, post.getUserId()));
-        User user = userRepository.getBy(u -> u.getId().equals(updatedReaction.getUserId()));
+        reactionRepository.update(new Reaction(null, reactionId, likeIt, post.getUserId()));
 
-        return new ReactionDto(reactionId, new UserShortDto(user.getId(), user.getNickname(), user.getPhotos()), likeIt);
+        return new ReactionDto(reactionId, new UserShortDto(currentUser.getId(), currentUser.getNickname(), currentUser.getPhotos()), likeIt);
     }
 
     @Override
-    public void deleteReaction(UUID reactionId) {
-        reactionRepository.delete(reaction -> reaction.getId().equals(reactionId));
+    public List<UUID> deleteReaction(UUID reactionId) {
+        return reactionRepository.delete(reaction -> reaction.getId().equals(reactionId));
     }
 }

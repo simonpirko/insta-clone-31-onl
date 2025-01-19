@@ -18,27 +18,26 @@ public class ReactionServlet extends BaseApiServlet {
         reactionService = serviceFactory.getReactionService();
     }
     @Override
-    protected Object doPostApi(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected Object doPostApi(HttpServletRequest req, HttpServletResponse resp) {
         UUID postId = UUID.fromString(req.getParameter("postId"));
         Boolean likeIt = Boolean.valueOf(req.getParameter("likeIt"));
 
-        return reactionService.addReaction(postId, likeIt);
+        return reactionService.addReaction(currentUser, postId, likeIt);
     }
 
     @Override
-    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) {
         UUID reactionId = UUID.fromString(req.getParameter("reactionId"));
         Boolean likeIt = Boolean.valueOf(req.getParameter("likeIt"));
 
-        return reactionService.editReaction(reactionId, likeIt);
+        return reactionService.editReaction(currentUser, reactionId, likeIt);
     }
 
     @Override
     protected Object doDeleteApi(HttpServletRequest req, HttpServletResponse resp) {
         UUID reactionId = UUID.fromString(req.getParameter("reactionId"));
 
-        reactionService.deleteReaction(reactionId);
-        return null;
+        return reactionService.deleteReaction(reactionId);
     }
 }
 
