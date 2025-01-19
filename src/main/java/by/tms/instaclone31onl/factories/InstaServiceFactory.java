@@ -2,14 +2,8 @@ package by.tms.instaclone31onl.factories;
 
 import by.tms.instaclone31onl.core.interfaces.factories.RepositoryFactory;
 import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
-import by.tms.instaclone31onl.core.interfaces.services.CommentService;
-import by.tms.instaclone31onl.core.interfaces.services.PostService;
-import by.tms.instaclone31onl.core.interfaces.services.ReactionService;
-import by.tms.instaclone31onl.core.interfaces.services.UserService;
-import by.tms.instaclone31onl.services.InstaCommentService;
-import by.tms.instaclone31onl.services.InstaPostService;
-import by.tms.instaclone31onl.services.InstaReactionService;
-import by.tms.instaclone31onl.services.InstaUserService;
+import by.tms.instaclone31onl.core.interfaces.services.*;
+import by.tms.instaclone31onl.services.*;
 
 public class InstaServiceFactory implements ServiceFactory{
     private final RepositoryFactory repositoryFactory;
@@ -45,8 +39,11 @@ public class InstaServiceFactory implements ServiceFactory{
 
     @Override
     public UserService getUserService() {
-        return new InstaUserService(
-                repositoryFactory.getUserRepository(),
-                repositoryFactory.getCommentRepository());
+        return new InstaUserService(repositoryFactory.getUserRepository());
+    }
+
+    @Override
+    public FileService getFileService(){
+        return new InstaFileService();
     }
 }

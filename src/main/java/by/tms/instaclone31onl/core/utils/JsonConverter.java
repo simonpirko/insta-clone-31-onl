@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 
 import java.time.LocalDateTime;
 
-public class JsonConverter {
+public final class JsonConverter {
     public static <T> String serialize(T obj)
     {
         Gson gson = new GsonBuilder()
