@@ -8,6 +8,7 @@
 </head>
 <body>
 <main class="d-flex flex-nowrap">
+
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
