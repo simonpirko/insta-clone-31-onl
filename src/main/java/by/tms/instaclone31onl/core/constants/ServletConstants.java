@@ -3,6 +3,7 @@ package by.tms.instaclone31onl.core.constants;
 import java.util.List;
 
 public final class ServletConstants {
+
     public static final String LOGIN_SERVLET = "/login";
     public static final String REGISTRATION_SERVLET = "/registration";
     public static final String POST_SERVLET = "/post";
