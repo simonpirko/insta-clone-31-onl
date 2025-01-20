@@ -101,34 +101,37 @@
                 <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu"></ul>
                 <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel"
                      aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="postModalLabel">Создать новую публикацию</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="formFile" class="form-label">Выберите изображение</label>
-                                        <input class="form-control" type="file" id="formFile">
-                                    </div>
+                    <form method="post" action="${pageContext.request.contextPath}/filecreate"
+                          enctype="multipart/form-data">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="postModalLabel">Создать новую публикацию</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="mb-3">
+                                            <label for="formFile" class="form-label">Выберите изображение</label>
+                                            <input class="form-control" type="file" id="formFile">
+                                        </div>
 
-                                    <div class="mb-3">
-                                        <label for="caption" class="form-label">Подпись</label>
-                                        <textarea class="form-control" id="caption" rows="3"
-                                                  placeholder="Добавьте подпись..."></textarea>
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="caption" class="form-label">Подпись</label>
+                                            <textarea class="form-control" id="caption" rows="3"
+                                                      placeholder="Добавьте подпись..."></textarea>
+                                        </div>
 
-                                    <button type="submit" class="btn btn-outline-secondary w-100">Опубликовать</button>
-                                </form>
+                                        <button type="submit" class="btn btn-outline-secondary w-100">Опубликовать
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </li>
-
             <li>
                 <a href="#" class="nav-link px-0 align-middle text-black">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
