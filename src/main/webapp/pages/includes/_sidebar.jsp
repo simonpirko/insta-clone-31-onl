@@ -1,38 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<style>
-    main {
-        height: 100vh;
-        max-height: 100vh;
-        overflow-x: auto;
-        overflow-y: hidden;
-    }
-
-    .scrollarea {
-        overflow-y: auto;
-    }
-
-    .b-example-divider {
-        width: 100%;
-        height: 3rem;
-        background-color: rgba(0, 0, 0, .1);
-        border: solid rgba(0, 0, 0, .15);
-        border-width: 1px 0;
-        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-    }
-
-    .b-example-vr {
-        flex-shrink: 0;
-        width: 1.5rem;
-        height: 100vh;
-    }
-
-    .bi {
-        vertical-align: -.3em;
-        fill: currentColor;
-    }
-</style>
-
 <div class="b-example-divider b-example-vr"></div>
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 300px;">
     <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
