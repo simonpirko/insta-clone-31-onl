@@ -2,31 +2,26 @@ package by.tms.instaclone31onl.servlets;
 
 import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.factories.RepositoryFactory;
-import by.tms.instaclone31onl.core.interfaces.factories.ServiceFactory;
 import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.PostRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.ReactionRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
-import by.tms.instaclone31onl.core.interfaces.services.UserService;
 import by.tms.instaclone31onl.core.models.entities.Comment;
 import by.tms.instaclone31onl.core.models.entities.Post;
 import by.tms.instaclone31onl.core.models.entities.Reaction;
 import by.tms.instaclone31onl.core.models.entities.User;
 import by.tms.instaclone31onl.factories.InstaRepositoryFactory;
-import by.tms.instaclone31onl.factories.InstaServiceFactory;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @WebServlet("/fill")
@@ -46,13 +41,18 @@ public class FillServlet extends HttpServlet {
         commentRepository.delete(x->true);
 
         List<User> userEntities = IntStream.range(1, 100).boxed()
-                .map(x -> new User(null, "login" + x, "hash" + 1,
+                .map(x ->{
+
+                    String salt = BCrypt.gensalt();
+                    String hash = BCrypt.hashpw("login" + x, salt);
+                    return new User(null, "login" + x, hash,
                         "nickname" + x, null, null,
                         List.of("https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
-                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp")))
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp"));
+                })
                 .toList();
 
         //save data
