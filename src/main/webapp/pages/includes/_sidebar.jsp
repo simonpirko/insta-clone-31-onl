@@ -63,10 +63,11 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form method="post" action="${pageContext.request.contextPath}/filecreate"
+                                  enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Выберите изображение</label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <label for="formFileMultiple" class="form-label">Выберите изображение</label>
+                                    <input class="form-control" type="file" name="file" accept="image/*" id="formFileMultiple" multiple>
                                 </div>
 
                                 <div class="mb-3">
@@ -77,6 +78,14 @@
 
                                 <button type="submit" class="btn btn-outline-secondary w-100">Опубликовать</button>
                             </form>
+                            <script>
+                                document.getElementById('formFileMultiple').addEventListener('change', function() {
+                                    var files = this.files;
+                                    if (files.length > 5) {
+                                        alert('Можно загрузить не более 5 файлов');
+                                    }
+                                });
+                            </script>
                         </div>
                     </div>
                 </div>
