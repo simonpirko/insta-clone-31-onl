@@ -1,5 +1,6 @@
 package by.tms.instaclone31onl.servlets.file;
 
+import by.tms.instaclone31onl.core.models.entities.User;
 import by.tms.instaclone31onl.servlets.base.BaseApiServlet;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletInputStream;
@@ -25,15 +26,15 @@ public class FileCreateServlet extends BaseApiServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.getRequestDispatcher("/pages/fileupload.jsp").forward(request, response);
+        request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
 
     @Override
     protected Object doPostApi(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
-        String username ="username"; // set current user or send login
+        String login = currentUser.getLogin();
 
-        List<String> paths = upload(req, IMAGES_POST_DESTINATION_FORMAT_PATH.formatted(username));
+        List<String> paths = upload(req, IMAGES_POST_DESTINATION_FORMAT_PATH.formatted(login));
         // IMAGES_PROFILE_DESTINATION_FORMAT_PATH для профиля
         return paths;
     }
