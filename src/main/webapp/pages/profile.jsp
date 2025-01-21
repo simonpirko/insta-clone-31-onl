@@ -101,8 +101,6 @@
                 <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu"></ul>
                 <div class="modal fade" id="postModal" tabindex="-1" aria-labelledby="postModalLabel"
                      aria-hidden="true">
-                    <form method="post" action="${pageContext.request.contextPath}/filecreate"
-                          enctype="multipart/form-data">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -111,10 +109,11 @@
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form>
+                                    <form method="post" action="${pageContext.request.contextPath}/filecreate"
+                                    enctype="multipart/form-data">
                                         <div class="mb-3">
-                                            <label for="formFile" class="form-label">Выберите изображение</label>
-                                            <input class="form-control" type="file" id="formFile">
+                                            <label for="formFileMultiple" class="form-label">Выберите изображение</label>
+                                            <input class="form-control" type="file" name="file" accept="image/*" id="formFileMultiple" multiple>
                                         </div>
 
                                         <div class="mb-3">
@@ -129,7 +128,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
                 </div>
             </li>
             <li>
