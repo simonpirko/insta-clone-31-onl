@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="b-example-divider b-example-vr"></div>
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary" style="width: 300px;">
@@ -106,11 +107,16 @@
     <div class="btn-group dropend">
         <button type="button" class="btn btn-outline-secondary text-start">
             <a href="#" class="nav-link px-0 align-self-end">
-
-                <!-- <img src=""
-                     class="rounded-circle"
-                     alt="Фото профиля" width="50"> -->
-
+                <c:if test="${currentUser.getPhotos().size() == 0}">
+                    <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                         class="rounded-circle"
+                         alt="Фото профиля" width="50">
+                </c:if>
+                <c:if test="${currentUser.getPhotos().size() != 0}">
+                    <img src="${currentUser.getPhotos().getLast()}"
+                         class="rounded-circle"
+                         alt="Фото профиля" width="50">
+                </c:if>
                 <span class="d-none d-sm-inline fs-5 p-4 align-middle">Профиль</span>
             </a>
         </button>
