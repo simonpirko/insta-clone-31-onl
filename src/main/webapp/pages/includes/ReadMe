@@ -1,3 +1,3 @@
-Для добавления этих файлов в свою jsp:
+Для добавления этих файлов свою jsp:
 1. прописать <jsp:include page="includes/import.jsp"/> в <head>
 2. прописать <jsp:include page="includes/_sidebar.jsp"/> в <body>
