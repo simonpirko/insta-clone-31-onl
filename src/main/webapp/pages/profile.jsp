@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
 <jsp:include page="includes/import.jsp"/>
@@ -19,7 +20,17 @@
             </li>
             <li class="container mb-3">
                 <div class="row">
-                    <div class="col-auto d-none d-lg-block">
+                    <div class="col-auto d-none d-lg-block ">
+                        <c:if test="${currentUser.getPhotos().size() == 0}">
+                            <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                                 class="rounded-circle"
+                                 alt="Фото профиля" width="250">
+                        </c:if>
+                        <c:if test="${currentUser.getPhotos().size() != 0}">
+                            <img src="${currentUser.getPhotos().getLast()}"
+                                 class="rounded-circle"
+                                 alt="Фото профиля" width="250">
+                        </c:if>
                     </div>
                     <div class="col-auto">
                         <div class="col p-4 d-flex flex-column position-static">
