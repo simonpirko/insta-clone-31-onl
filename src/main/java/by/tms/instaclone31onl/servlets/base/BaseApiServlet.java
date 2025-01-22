@@ -34,6 +34,7 @@ public class BaseApiServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         currentUser = (User) req.getSession().getAttribute(AttributeConstants.CURRENT_USER);
+        req.setAttribute(AttributeConstants.CURRENT_USER_ID, currentUser.getId());
         super.service(req, resp);
     }
 
@@ -73,7 +74,7 @@ public class BaseApiServlet extends HttpServlet {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 
-    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) {
+    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 

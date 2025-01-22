@@ -14,21 +14,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class InstaReactionService implements ReactionService {
-    private final UserRepository userRepository;
     private final ReactionRepository reactionRepository;
-    private final PostRepository postRepository;
 
-    public InstaReactionService(ReactionRepository reactionRepository, PostRepository postRepository, UserRepository userRepository) {
-        this.postRepository = postRepository;
+    public InstaReactionService(ReactionRepository reactionRepository) {
         this.reactionRepository = reactionRepository;
-        this.userRepository = userRepository;
     }
 
     @Override
     public ReactionDto addReaction(User currentUser, UUID postId, Boolean likeIt) {
-        Post post = postRepository.getBy(p -> p.getId().equals(postId));
-        List<UUID> reactionsId = reactionRepository.insert(List.of(new Reaction(null, postId, likeIt, post.getUserId())));
-
+        List<UUID> reactionsId = reactionRepository.insert(List.of(new Reaction(null, postId, likeIt, currentUser.getId())));
         return new ReactionDto(reactionsId.getFirst(), new UserShortDto(currentUser.getId(), currentUser.getNickname(), currentUser.getPhotos()), likeIt);
     }
 
@@ -36,9 +30,8 @@ public class InstaReactionService implements ReactionService {
     @Override
     public ReactionDto editReaction(User currentUser, UUID reactionId, Boolean likeIt) {
         Reaction oldReaction = reactionRepository.getBy(reaction -> reaction.getId().equals(reactionId));
-        Post post = postRepository.getBy(p -> p.getId().equals(oldReaction.getPostId()));
-        reactionRepository.update(new Reaction(null, reactionId, likeIt, post.getUserId()));
-
+        oldReaction.setLikeIt(likeIt);
+        reactionRepository.update(oldReaction);
         return new ReactionDto(reactionId, new UserShortDto(currentUser.getId(), currentUser.getNickname(), currentUser.getPhotos()), likeIt);
     }
 

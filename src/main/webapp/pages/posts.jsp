@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.UUID" %>
+<%@ page import="by.tms.instaclone31onl.core.constants.AttributeConstants" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 20.12.2024
@@ -6,6 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    UUID id = (UUID) request.getAttribute(AttributeConstants.CURRENT_USER_ID);
+%>
 
 <!doctype html>
 <html lang="en">
@@ -13,27 +17,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <jsp:include page="includes/import.jsp"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
 </head>
 <body>
-<div class="container text-center">
-    <div class="row align-items-start h-100">
-        <div class="col-2">
+<main class="d-flex flex-nowrap">
+    <jsp:include page="includes/_sidebar.jsp"/>
 
-        </div>
-        <div x-data="posts" class="col">
-            <template x-if="!showPosts()">
-                <div>No post to view</div>
-            </template>
-            <template x-if="showPosts()">
+<div class="text-center container-fluid scrollarea" id="card-scroll" x-data="posts" x-on:scroll = "scrollFunction()">
+        <template x-if="!showPosts()">
+            <div>No post to view</div>
+        </template>
+        <template x-if="showPosts()">
 
-                <div class="card" style="width: 48rem">
-                    <template x-for="post in pagedPosts">
-                        <div class="border border-left border-right px-0">
-                        
+            <div class="card" style="width: 48rem" >
+                <template x-for="post in pagedPosts">
+                    <div class="border border-left border-right px-0">
+
                         <div class="d-flex p-3 border-bottom">
                             <img :src="post.user.photos[0]" class="rounded-circle"
                                  height="50" alt="Avatar" loading="lazy"/>
@@ -62,11 +62,11 @@
                                                     </div>
                                                 </template>
                                             </template>
-                                                <template x-if="!post.images.length">
-                                                    <div>
-                                                        NOT images to display
-                                                    </div>
-                                                </template>
+                                            <template x-if="!post.images.length">
+                                                <div>
+                                                    NOT images to display
+                                                </div>
+                                            </template>
                                         </div>
                                         <button class="carousel-control-prev" type="button"
                                                 :data-bs-target="'#carouselExample'+post.id" data-bs-slide="prev">
@@ -82,8 +82,8 @@
 
 
                                     <div style="margin-top: 10px">
-                                    <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
-                                        <li>
+                                        <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
+                                            <li>
                                             <span @click="setReaction(post.likes, true, post.id)">
                                             <template x-if="isUserParticipationInReaction(post.likes, true)">
                                                 <i class="bi bi-hand-thumbs-up-fill"></i>
@@ -92,9 +92,9 @@
                                                 <i class="bi bi-hand-thumbs-up"></i>
                                             </template>
                                             </span>
-                                            <span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
-                                            /
-                                            <span @click="setReaction(post.likes, false, post.id)">
+                                                <span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
+                                                /
+                                                <span @click="setReaction(post.likes, false, post.id)">
                                             <template x-if="isUserParticipationInReaction(post.likes, false)">
                                                 <i class="bi bi-hand-thumbs-down-fill"></i>
                                             </template>
@@ -102,20 +102,20 @@
                                                 <i class="bi bi-hand-thumbs-down"></i>
                                             </template>
                                             </span>
-                                            <span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
-                                        </li>
+                                                <span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
+                                            </li>
 
-                                        <li @click="showComments(post.id, post.comments)">
-                                            <template x-if="isUserParticipationInComment(post.comments)">
-                                                <i  class="bi bi-chat-left-dots-fill"></i>
-                                            </template>
-                                            <template x-if="!isUserParticipationInComment(post.comments)">
-                                                <i class="bi bi-chat-left-dots"></i>
-                                            </template>
+                                            <li @click="showComments(post.id, post.comments)">
+                                                <template x-if="isUserParticipationInComment(post.comments)">
+                                                    <i  class="bi bi-chat-left-dots-fill"></i>
+                                                </template>
+                                                <template x-if="!isUserParticipationInComment(post.comments)">
+                                                    <i class="bi bi-chat-left-dots"></i>
+                                                </template>
 
-                                            <span x-text="post.comments.length" class="small ps-2"></span>
-                                        </li>
-                                    </ul>
+                                                <span x-text="post.comments.length" class="small ps-2"></span>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -123,29 +123,29 @@
 
 
                     </div>
-                    </template>
-                </div>
-            </template>
-            <!--modal-->
-            <div class="modal" id="modal-commets" tabindex="-1">
-                <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Post comments</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <template x-if="!modal.comments">
-                                <p>No comments to view</p>
-                            </template>
-                            <template x-if="modal.comments">
-                                <template x-for="comment in modal.comments">
-                                    <div style="margin-bottom: 10px; text-align: left; font-size:13px;">
-                                        <div class="row">
-                                            <div class="col-1">
-                                                <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
-                                            </div>
-                                            <div class="col">
+                </template>
+            </div>
+        </template>
+        <!--modal-->
+        <div class="modal" id="modal-commets" tabindex="-1">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Post comments</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <template x-if="!modal.comments">
+                            <p>No comments to view</p>
+                        </template>
+                        <template x-if="modal.comments">
+                            <template x-for="comment in modal.comments">
+                                <div style="margin-bottom: 10px; text-align: left; font-size:13px;">
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
+                                        </div>
+                                        <div class="col">
                                             <div class="row">
                                                 <div class="col">
                                                     <span x-text="comment.author.nickname"></span>
@@ -153,36 +153,33 @@
                                                     <span x-text="howManyHours(comment.date)" class="small text-muted font-weight-normal"></span>
                                                 </div>
                                             </div>
-                                                <div class="row">
-                                                    <div class="col" x-text="comment.text">
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col" x-text="comment.text">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </template>
+                                </div>
                             </template>
+                        </template>
 
+                    </div>
+                    <div class="modal-footer row">
+
+                        <div class="col">
+                            <textarea style="width:100%; resize: none;" class="form-control" id="comment_text" rows="3"></textarea>
                         </div>
-                        <div class="modal-footer row">
-
-                                <div class="col">
-                                    <textarea style="width:100%; resize: none;" class="form-control" id="comment_text" rows="3"></textarea>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" @click="sendComment()" class="btn btn-primary">Send</button>
-                                </div>
-
+                        <div class="col-3">
+                            <button type="button" @click="sendComment()" class="btn btn-primary">Send</button>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-2">
-        </div>
-    </div>
-</div>
 
+</div>
+</main>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -196,19 +193,22 @@
 
 <script src="https://unpkg.com/alpinejs" defer></script>
 <script>
-
     document.addEventListener('alpine:init', () => {
         Alpine.data("posts", () => ({
 
             pagedPosts: [],
             isDataLoading : false,
-            fakeUserId:'6d0b0af1-db7a-451a-8fda-8cad70541f1d',
+            userId:'<%=id%>',
             modal : {
                 window:undefined,
                 postId:undefined,
                 textarea:undefined,
                 comments:[]
             },
+            scrollingElement:{
+                block:undefined
+            },
+
             pager: {
                 start:0,
                 count:50,
@@ -220,13 +220,24 @@
                 let modalElement = document.getElementById('modal-commets');
                 this.modal.window = new bootstrap.Modal(modalElement);
                 this.modal.textarea = document.getElementById("comment_text");
+                this.scrollingElement.block = document.getElementById("card-scroll");
                 modalElement.addEventListener('hide.bs.modal', function(){
                     document.getElementById("comment_text").value = '';
 
                 });
-                window.onscroll = () => {
-                    this.scrollFunction();
-               };
+                // document.getElementById('card-scroll').addEventListener('scroll', function(){
+                //    alert('scroll');
+                //
+                // });
+
+
+                // window.addEventListener('scroll',function (){
+                //     console.log("scroll");
+                // });
+                //window.onscroll = () => {
+                //    console.log("hello");
+                //    this.scrollFunction();
+               //};
             },
             separateReaction(likes,like){
                 return likes.filter(function (x){
@@ -239,28 +250,77 @@
                     return;
                 }
 
-                let userLike = post.likes.find(u=>u.user.id == this.fakeUserId);
+                let userLike = post.likes.find(u=>u.user.id == this.userId);
 
                 if(userLike === undefined){
                     //Create new
-                    let mocklike = {
-                        user:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
-                        id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
-                        likeIt: like
+                    let createReaction = {
+                        postId:postId,
+                        likeIt:like
                     }
-                    post.likes.push(mocklike);
+                    fetch( '/api/reaction', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(createReaction)
+                    })
+                        .then(response => response.json())
+                        .then(result =>{
+                            if(result.isSuccess){
+                                post.likes.push(result.content);
+                            }
+                        })
+                        .catch(resons=>{
+                            alert(resons.content)
+                        });
+
+                    // let mocklike = {
+                    //     user:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
+                    //     id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
+                    //     likeIt: like
+                    // }
+                    //post.likes.push(mocklike);
                     return;
                 }
 
                 if(userLike.likeIt == like){
                     //DELETE
-
-                    post.likes = post.likes.filter(x=>x.user.id != this.fakeUserId);
-
+                    fetch( '/api/reaction?reactionId='+userLike.id, {
+                        method: 'DELETE'
+                    })
+                        .then(response => response.json())
+                        .then(result =>{
+                            if(result.isSuccess){
+                                post.likes = post.likes.filter(x=>x.user.id != this.userId)
+                            }
+                        })
+                        .catch(resons=>{
+                            alert(resons.content)
+                        });
                 }
                 else{
                     //UPDATE
-                    userLike.likeIt = like;
+                    let updateReaction = {
+                        reactionId:userLike.id,
+                        likeIt:like
+                    }
+                    fetch( '/api/reaction', {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json;charset=utf-8'
+                        },
+                        body: JSON.stringify(updateReaction)
+                    })
+                        .then(response => response.json())
+                        .then(result =>{
+                            if(result.isSuccess){
+                                userLike.likeIt = like;
+                            }
+                        })
+                        .catch(resons=>{
+                            alert(resons.content)
+                        });
                 }
             },
             howManyReactions(likes, like){
@@ -278,7 +338,7 @@
             setComments(comment){
                 //mock
                 let com = {
-                    author:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
+                    author:{id: this.userId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
                     date: "24-12-2024 12:45:08",
                     id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
                     text: comment
@@ -295,18 +355,12 @@
                 {
                     return;
                 }
-                const height = document.body.offsetHeight
-                const screenHeight = window.innerHeight
-
-                // Сколько пикселей уже проскроллили
-                const scrolled = window.scrollY
-
+                const height = this.scrollingElement.block.scrollHeight;
+                const screenHeight = this.scrollingElement.block.offsetHeight;
                 // Порог
-                const threshold = height - screenHeight / 4
-
+                const threshold = height - screenHeight * 2;
                 // Низ экрана относительно страницы
-                const position = scrolled + screenHeight
-
+                const position = this.scrollingElement.block.scrollTop
                 if (position >= threshold && !this.pager.isEnd && !this.isDataLoading) {
                     this.pager.start++;
                     this.loaddata(this.pager.start);
@@ -316,10 +370,10 @@
                 return this.pagedPosts.length > 0
             },
             isUserParticipationInComment(comments){
-                return comments.some(u=> u.author.id == this.fakeUserId);
+                return comments.some(u=> u.author.id == this.userId);
             },
             isUserParticipationInReaction(reactions, like){
-                return reactions.some(u=>u.user.id == this.fakeUserId && u.likeIt == like)
+                return reactions.some(u=>u.user.id == this.userId && u.likeIt == like)
             },
             howManyHours(date){
 

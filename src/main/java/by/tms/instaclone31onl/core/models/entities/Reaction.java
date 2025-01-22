@@ -2,9 +2,9 @@ package by.tms.instaclone31onl.core.models.entities;
 
 import by.tms.instaclone31onl.core.annotations.Entity;
 import com.opencsv.bean.CsvBindByPosition;
+import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
-
 @Entity(name = "reactions", directories = "\\resources")
 public class Reaction extends BaseEntity {
     @CsvBindByPosition(position = 1)
@@ -12,7 +12,7 @@ public class Reaction extends BaseEntity {
     @CsvBindByPosition(position = 2)
     private final UUID userId;
     @CsvBindByPosition(position = 3)
-    private final boolean likeIt;
+    private boolean likeIt;
 
     public Reaction(UUID id,
                    UUID postId,
@@ -31,6 +31,9 @@ public class Reaction extends BaseEntity {
     }
     public boolean isLikeIt() {
         return likeIt;
+    }
+    public void setLikeIt(boolean likeIt) {
+        this.likeIt = likeIt;
     }
 
     @Override
