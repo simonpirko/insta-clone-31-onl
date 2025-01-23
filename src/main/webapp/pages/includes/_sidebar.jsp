@@ -64,16 +64,16 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="${pageContext.request.contextPath}/filecreate"
+                            <form method="post" action="/post"
                                   enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="formFileMultiple" class="form-label">Выберите изображение</label>
-                                    <input class="form-control" type="file" name="file" accept="image/*" id="formFileMultiple" multiple>
+                                    <input class="form-control" type="file" name="file" accept="image/*" id="formFileMultiple" multiple/>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="caption" class="form-label">Подпись</label>
-                                    <textarea class="form-control" id="caption" rows="3"
+                                    <label for="caption" class="form-label">Описание</label>
+                                    <textarea class="form-control" name="description" id="caption" rows="3"
                                               placeholder="Добавьте подпись..."></textarea>
                                 </div>
 
@@ -106,7 +106,7 @@
     <hr>
     <div class="btn-group dropend">
         <button type="button" class="btn btn-outline-secondary text-start">
-            <a href="#" class="nav-link px-0 align-self-end">
+            <a href="/profile" class="nav-link px-0 align-self-end">
                 <c:if test="${currentUser.getPhotos().size() == 0}">
                     <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
                          class="rounded-circle"
