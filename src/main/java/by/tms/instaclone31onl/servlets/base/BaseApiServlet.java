@@ -20,10 +20,9 @@ import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletFileUpload;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static by.tms.instaclone31onl.core.constants.AppConstants.FILES_ORIGIN_PATH;
 
@@ -34,6 +33,7 @@ public class BaseApiServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         currentUser = (User) req.getSession().getAttribute(AttributeConstants.CURRENT_USER);
+        req.setAttribute(AttributeConstants.CURRENT_USER_ID, currentUser.getId());
         super.service(req, resp);
     }
 
@@ -73,10 +73,46 @@ public class BaseApiServlet extends HttpServlet {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 
-    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) {
+    protected Object doPutApi(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         throw new NotImplementServletMethodException("such method not implemented");
     }
 
+    protected HashMap<String,Object> getMultiPartContent(HttpServletRequest request, String directory) throws IOException {
+        HashMap<String,Object> result = new HashMap<>();
+        if (!JakartaServletFileUpload.isMultipartContent(request)) {
+            return result;
+        }
+        DiskFileItemFactory factory = DiskFileItemFactory.builder().get();
+        JakartaServletFileUpload<DiskFileItem, DiskFileItemFactory> fileUpload = new JakartaServletFileUpload<>(factory);
+        Path directoriesPath = Path.of(AppConstants.TOMCAT_ROOT, directory);
+        List<DiskFileItem> items = fileUpload.parseRequest(request);
+        for (DiskFileItem item : items) {
+            if (item.isFormField())
+            {
+                item.setCharsetDefault(Charset.forName("UTF-8"));
+                result.put(item.getFieldName(), item.getString());
+                continue;
+            }
+            FileUtils.createDirectoryIfNotExists(directoriesPath);
+            String extension = FileUtils.getExtension(item.getName());
+            String fileName = FILE_NAME_FORMAT.formatted(UUID.randomUUID().toString(), extension);
+            File newFile = new File(directoriesPath.toFile(), fileName);
+            item.write(newFile.toPath());
+
+            if(result.containsKey(item.getFieldName())) {
+                ((List<String>)result.get(item.getFieldName())).add(Path.of(directory.replace(FILES_ORIGIN_PATH, ServletConstants.FIlE_SERVLET), fileName)
+                        .toString().replace("\\", "/")) ;
+            }
+            else {
+                List<String> list = new ArrayList<>();
+                list.add(Path.of(directory.replace(FILES_ORIGIN_PATH, ServletConstants.FIlE_SERVLET), fileName)
+                   .toString().replace("\\", "/"));
+                result.put(item.getFieldName(), list);
+            }
+        }
+        return result;
+
+    }
     protected List<String> upload(HttpServletRequest request, String directory) throws IOException {
         List<String> result = new ArrayList<>();
         if (!JakartaServletFileUpload.isMultipartContent(request)) {
@@ -87,6 +123,8 @@ public class BaseApiServlet extends HttpServlet {
         Path directoriesPath = Path.of(AppConstants.TOMCAT_ROOT, directory);
         List<DiskFileItem> items = fileUpload.parseRequest(request);
         for (DiskFileItem item : items) {
+            if (item.isFormField())
+                continue;
             FileUtils.createDirectoryIfNotExists(directoriesPath);
             String extension = FileUtils.getExtension(item.getName());
             String fileName = FILE_NAME_FORMAT.formatted(UUID.randomUUID().toString(), extension);

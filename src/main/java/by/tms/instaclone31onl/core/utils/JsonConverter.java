@@ -6,6 +6,7 @@ import by.tms.instaclone31onl.core.enums.PostStatus;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
 import java.time.LocalDateTime;
 
 public final class JsonConverter {
@@ -24,5 +25,12 @@ public final class JsonConverter {
                 .registerTypeAdapter(PostStatus.class, new PostStatusTypeAdapter())
                 .create();
         return (T)gson.fromJson(json, tClass);
+    }
+    public static <T> T deserialize(BufferedReader buffer, Class<T> tClass) {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+                .registerTypeAdapter(PostStatus.class, new PostStatusTypeAdapter())
+                .create();
+        return (T)gson.fromJson(buffer, tClass);
     }
 }

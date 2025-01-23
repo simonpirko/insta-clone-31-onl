@@ -1,5 +1,6 @@
 package by.tms.instaclone31onl.services;
 
+import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.PostRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.ReactionRepository;
@@ -13,7 +14,9 @@ import by.tms.instaclone31onl.core.models.entities.BaseEntity;
 import by.tms.instaclone31onl.core.models.entities.Comment;
 import by.tms.instaclone31onl.core.models.entities.Post;
 import by.tms.instaclone31onl.core.models.entities.Reaction;
+import by.tms.instaclone31onl.core.models.requests.PostCreateRequest;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -85,5 +88,13 @@ public class InstaPostService implements PostService {
             postDtos.add(postDto);
         }
         return postDtos;
+    }
+
+    @Override
+    public List<UUID> insert(PostCreateRequest request) {
+        Post newPost = new Post(null, request.getUserId(),
+                request.getDescription(),request.getPhotos(),
+                LocalDateTime.now(), request.getStatus());
+        return postRepository.insert(List.of(newPost));
     }
 }

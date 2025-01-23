@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
-<jsp:include page="includes/import.jsp"/>
+<jsp:include page="includes/importCss.jsp"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
@@ -76,6 +76,7 @@
         </ul>
     </div>
 </main>
+<jsp:include page="includes/importJs.jsp"/>
 </body>
 
 </html>
