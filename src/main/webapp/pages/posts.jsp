@@ -143,7 +143,9 @@
                                 <div style="margin-bottom: 10px; text-align: left; font-size:13px;">
                                     <div class="row">
                                         <div class="col-1">
-                                            <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
+                                            <template x-if="comment.author.photos" >
+                                                <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
+                                            </template>
                                         </div>
                                         <div class="col">
                                             <div class="row">
@@ -219,19 +221,6 @@
                     document.getElementById("comment_text").value = '';
 
                 });
-                // document.getElementById('card-scroll').addEventListener('scroll', function(){
-                //    alert('scroll');
-                //
-                // });
-
-
-                // window.addEventListener('scroll',function (){
-                //     console.log("scroll");
-                // });
-                //window.onscroll = () => {
-                //    console.log("hello");
-                //    this.scrollFunction();
-               //};
             },
             separateReaction(likes,like){
                 return likes.filter(function (x){
@@ -321,23 +310,36 @@
                 return this.separateReaction(likes,like).length;
             },
             sendComment(){
-                console.log(this.modal.postId);
-                console.log(this.modal.textarea.value);
-
+                if(this.modal.textarea.value === undefined || this.modal.textarea.value === ''){
+                    return;
+                }
+                let comment = {
+                    postId: this.modal.postId,
+                    text:this.modal.textarea.value
+                }
                 //todo send
-
-                this.setComments(this.modal.textarea.value)
-                this.modal.textarea.value = '';
+                fetch( '/api/comment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(comment)
+                })
+                    .then(response => response.json())
+                    .then(result =>{
+                        if(result.isSuccess){
+                            this.setComments(result.content)
+                            this.modal.textarea.value = '';
+                            //post.likes.push(result.content);
+                        }
+                    })
+                    .catch(resons=>{
+                        alert(resons.content)
+                    });
             },
             setComments(comment){
                 //mock
-                let com = {
-                    author:{id: this.userId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
-                    date: "24-12-2024 12:45:08",
-                    id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
-                    text: comment
-                }
-                this.modal.comments.push(com);
+                this.modal.comments.push(comment);
             },
             showComments(id, comments){
                 this.modal.postId = id;
