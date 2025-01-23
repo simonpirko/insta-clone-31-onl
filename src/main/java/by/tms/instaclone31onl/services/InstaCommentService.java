@@ -16,13 +16,9 @@ import java.util.UUID;
 
 public class InstaCommentService implements CommentService {
     private final CommentRepository commentRepository;
-    private final UserRepository userRepository;
-    private final PostRepository postRepository;
 
-    public InstaCommentService(CommentRepository commentRepository, UserRepository userRepository, PostRepository postRepository) {
-        this.userRepository = userRepository;
+    public InstaCommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
-        this.postRepository = postRepository;
     }
 
     @Override

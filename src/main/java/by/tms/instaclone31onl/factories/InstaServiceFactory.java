@@ -33,8 +33,7 @@ public class InstaServiceFactory implements ServiceFactory{
 
     @Override
     public CommentService getCommentService() {
-        return new InstaCommentService(repositoryFactory.getCommentRepository(), repositoryFactory.getUserRepository(),
-                repositoryFactory.getPostRepository());
+        return new InstaCommentService(repositoryFactory.getCommentRepository());
     }
 
     @Override
