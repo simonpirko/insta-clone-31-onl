@@ -4,5 +4,5 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record CommentDto(UUID id, UserShortDto author, String text, LocalDateTime date ) {
+public record CommentDto(UUID id, UserShortDto author, String text, LocalDateTime date) {
 }
