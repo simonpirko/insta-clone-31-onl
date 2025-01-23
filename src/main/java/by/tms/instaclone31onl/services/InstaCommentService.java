@@ -26,12 +26,11 @@ public class InstaCommentService implements CommentService {
     }
 
     @Override
-    public CommentDto addComment(UUID postId, UUID userId, String text) {
-        Post post = postRepository.getBy(p -> p.getId().equals(postId));
-        Comment newComment = new Comment(null, postId, text, post.getUserId(), LocalDateTime.now());
+    public CommentDto addComment(UUID postId, User currentUser, String text) {
+
+        Comment newComment = new Comment(null, postId, text, currentUser.getId(), LocalDateTime.now());
         List<UUID> commentIds = commentRepository.insert(List.of(newComment));
         UUID commentId = commentIds.get(0);
-        User user = userRepository.getBy(u -> u.getId().equals(userId));
-        return new CommentDto(commentId, new UserShortDto(user.getId(), user.getNickname(), user.getPhotos()), text,  newComment.getCreatedAt());
+        return new CommentDto(commentId, new UserShortDto(currentUser.getId(), currentUser.getNickname(), currentUser.getPhotos()), text,  newComment.getCreatedAt());
     }
 }
