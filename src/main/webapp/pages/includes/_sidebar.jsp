@@ -14,7 +14,7 @@
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/post" class="nav-link px-0 text-black">
+            <a href="${pageContext.request.contextPath}/post" class="nav-link px-0 text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi" viewBox="0 0 16 16">
                     <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"></path>
@@ -64,7 +64,7 @@
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form method="post" action="/post"
+                            <form method="post" action="${pageContext.request.contextPath}/post"
                                   enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="formFileMultiple" class="form-label">Выберите изображение</label>
@@ -94,7 +94,7 @@
         </li>
 
         <li>
-            <a href="#" class="nav-link px-0 align-middle text-black">
+            <a href="${pageContext.request.contextPath}/edit" class="nav-link px-0 align-middle text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi" viewBox="0 0 16 16">
                     <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"></path>
@@ -106,7 +106,7 @@
     <hr>
     <div class="btn-group dropend">
         <button type="button" class="btn btn-outline-secondary text-start">
-            <a href="/profile" class="nav-link px-0 align-self-end">
+            <a href="${pageContext.request.contextPath}/profile" class="nav-link px-0 align-self-end">
                 <c:if test="${currentUser.getPhotos().size() == 0}">
                     <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
                          class="rounded-circle"

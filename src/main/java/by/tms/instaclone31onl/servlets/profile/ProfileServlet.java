@@ -19,8 +19,8 @@ public class ProfileServlet extends BaseApiServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
 
 }

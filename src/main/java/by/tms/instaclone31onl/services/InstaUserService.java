@@ -35,6 +35,6 @@ public class InstaUserService implements UserService {
 
     @Override
     public void editUser(User user) {
-
+        userRepository.update(user);
     }
 }
