@@ -1,9 +1,8 @@
-<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
-<jsp:include page="includes/importCss.jsp"/>
+    <jsp:include page="includes/importCss.jsp"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile Page</title>
@@ -90,15 +89,18 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="postModalLabel">Создать новую публикацию</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="postModalLabel">Создать новую
+                                                    публикацию</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <form method="post"
                                                       action="${pageContext.request.contextPath}/filecreate"
                                                       enctype="multipart/form-data">
                                                     <div class="mb-3">
-                                                        <label for="formFileMultiple" class="form-label">Выберите изображение</label>
+                                                        <label for="formFileMultiple" class="form-label">Выберите
+                                                            изображение</label>
                                                         <input class="form-control" type="file" name="file"
                                                                accept="image/*" id="formFileMultiple" multiple>
                                                     </div>
@@ -128,17 +130,20 @@
                     </div>
                 </c:if>
                 <c:if test="${currentUser.getPhotos().size() != 0}">
-
                     <ul>
-                        <c:forEach var="photo" items="${currentUser.getPhotos()}">
-
-                        </c:forEach>
+                        <div class="container">
+                            <div class="row justify-content-start">
+                                <c:forEach var="photo" items="${currentUser.getPhotos()}">
+                                    <div class="col-4 my-3 d-flex">
+                                        <div class="card" style="width: 18rem;">
+                                            <img src="${currentUser.getPhotos().get(1)}" class="card-img-top"
+                                                 alt="post photo">
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
                     </ul>
-                    <div class="container align-items-center mt-3">
-                        <img src="${currentUser.getPhotos().getLast()}"
-                             class="rounded-circle"
-                             alt="Фото профиля" width="250">
-                    </div>
                 </c:if>
             </li>
         </ul>
