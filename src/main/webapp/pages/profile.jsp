@@ -1,3 +1,4 @@
+<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
@@ -34,12 +35,9 @@
                     </div>
                     <div class="col-auto">
                         <div class="col p-4 d-flex flex-column position-static">
+
                             <div class="p-4 mb-3 bg-body-tertiary rounded">
-                                <p class="mb-0">Customize this section to tell your visitors a
-                                    little
-                                    bit
-                                    about
-                                    yourself or something else entirely. Totally up to you.</p>
+                                <p class="mb-0">${currentUser.getDescription() == null || currentUser.getDescription().isBlank()? "Add your description" : currentUser.getDescription()}</p>
                             </div>
                             <div class="container">
                                 <div class="row row-cols-auto">

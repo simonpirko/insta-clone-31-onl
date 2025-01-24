@@ -1,5 +1,6 @@
 package by.tms.instaclone31onl.servlets;
 
+import by.tms.instaclone31onl.core.constants.ServletConstants;
 import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.factories.RepositoryFactory;
 import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
@@ -24,7 +25,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.stream.IntStream;
 
-@WebServlet("/fill")
+@WebServlet(ServletConstants.FILL_DATA_SERVLET)
 public class FillServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,7 +52,8 @@ public class FillServlet extends HttpServlet {
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
                                 "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp",
-                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp"));
+                                "https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp"),
+                             "Some greate description for user login"+x);
                 })
                 .toList();
 
