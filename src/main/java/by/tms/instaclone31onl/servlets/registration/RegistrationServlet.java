@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 @WebServlet(ServletConstants.REGISTRATION_SERVLET)
 public class RegistrationServlet extends HttpServlet {
@@ -34,7 +35,6 @@ public class RegistrationServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         response.setContentType("text/html");
-
         UserService userService = serviceFactory.getUserService();
         String login = request.getParameter("aName");
         String password = request.getParameter("aPass");

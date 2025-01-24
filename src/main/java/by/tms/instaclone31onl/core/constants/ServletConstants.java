@@ -17,7 +17,9 @@ public final class ServletConstants {
     public static final String FIlE_SERVLET = "/file";
     public static final String FILE_SERVLET_URL_PATTERN =  "/file/*";
     public static final String LOGOUT_SERVLET = "/logout";
-    public static final List<String> UNAUTHORIZED_URLS = List.of(LOGIN_SERVLET, REGISTRATION_SERVLET);
+    public static final String FILL_DATA_SERVLET = "/fill";
+    public static final List<String> UNAUTHORIZED_URLS = List.of(LOGIN_SERVLET, REGISTRATION_SERVLET, FILL_DATA_SERVLET);
     public static final String COMMENT_SERVLET_NAME = "COMMENT-API-SERVLET";
     public static final String COMMENT_API_SERVLET = "/api/comment";
+
 }

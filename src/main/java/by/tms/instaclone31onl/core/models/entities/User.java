@@ -26,6 +26,8 @@ public class User extends BaseEntity {
     private final List<UUID> blackList;
     @CsvBindByPosition(position = 6)
     private final List<String> photos;
+    @CsvBindByPosition(position = 7)
+    private String description;
 
     public User(UUID id,
                 String login,
@@ -33,7 +35,8 @@ public class User extends BaseEntity {
                 String nickname,
                 List<UUID> friendIds,
                 List<UUID> blackList,
-                List<String> photos) {
+                List<String> photos,
+                String description) {
         super(id);
         this.login = login;
         this.hash = hash;
@@ -41,6 +44,7 @@ public class User extends BaseEntity {
         this.friendIds = Optional.ofNullable(friendIds).orElse(new ArrayList<>());
         this.blackList = Optional.ofNullable(blackList).orElse(new ArrayList<>());
         this.photos = Optional.ofNullable(photos).orElse(new ArrayList<>());
+        this.description = description;
     }
 
     public List<UUID> getBlackList() {
@@ -62,6 +66,10 @@ public class User extends BaseEntity {
         return photos;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     @Override
     public String[] getLine() {
         return new String[]{
@@ -71,7 +79,8 @@ public class User extends BaseEntity {
                 nickname,
                 JsonConverter.serialize(friendIds),
                 JsonConverter.serialize(blackList),
-                JsonConverter.serialize(photos)
+                JsonConverter.serialize(photos),
+                description
         };
     }
 
@@ -82,7 +91,8 @@ public class User extends BaseEntity {
                 line[3],
                 (List<UUID>)JsonConverter.deserialize(line[4], List.class),
                 (List<UUID>)JsonConverter.deserialize(line[5], List.class),
-                (List<String>)JsonConverter.deserialize(line[6], List.class)
+                (List<String>)JsonConverter.deserialize(line[6], List.class),
+                line.length > 7 ? line[7] : null
                 );
     }
 }
