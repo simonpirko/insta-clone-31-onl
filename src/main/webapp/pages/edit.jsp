@@ -17,7 +17,43 @@
             <li class="ms-2">
                 <hr>
             </li>
-            <li><!-- элементы изменения профиля (пароль, никнейм, фото, описание профиля) --></li>
+            <li>
+                <!-- элементы изменения профиля (пароль, никнейм, фото, описание профиля) -->
+                <form action="${pageContext.request.contextPath}/edit-profile" method="post" enctype="multipart/form-data" class="p-4">
+                    <!-- кнопка загрузки нового фото профиля -->
+                        <div class="mb-3 text-center">
+                        <label for="profilePhoto" class="form-label">
+                            <img id="profilePreview" src="${currentUser.getPhotos()}" alt="Profile photo" class="rounded-circle"
+                                 style="width: 100px; height: 100px; cursor: pointer;">
+                        </label>
+                        <input type="file" class="form-control d-none" id="profilePhoto" name="profilePhoto" accept="image/*"
+                               onchange="previewProfilePhoto(event)">
+                    </div>
+
+                    <!-- поле для изменения ника -->
+                    <div class="mb-3">
+                        <label for="nickname" class="form-label">Никнейм</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" value="${currentUser.getNickname()}" required>
+                    </div>
+
+                    <!-- поле для изменения пароля -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Пароль</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Введите новый пароль">
+                    </div>
+
+                    <!-- поле для описания профиля -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Описание профиля</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${currentUser.getDescription()}</textarea>
+                    </div>
+
+                    <!-- кнопка сохранения -->
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </div>
+                </form>
+            </li>
         </ul>
     </div>
 </main>
