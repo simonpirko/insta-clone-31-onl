@@ -1,5 +1,7 @@
+<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <html>
 <head>
     <jsp:include page="includes/importCss.jsp"/>
@@ -14,7 +16,7 @@
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
             <li>
-                <span class="container align-items-end d-flex p-1 ms-2 fs-4 mt-2"> ${currentUser.getNickname()} </span>
+                <span class="container align-items-end d-flex p-1 ms-2 fs-4 mt-2"> ${profileUser.getNickname()} </span>
             </li>
             <li class="ms-2">
                 <hr>
@@ -22,13 +24,13 @@
             <li class="container mb-3 list-group list-group-flush">
                 <div class="row">
                     <div class="col-auto d-none d-lg-block ">
-                        <c:if test="${currentUser.getPhotos().size() == 0}">
+                        <c:if test="${profileUser.getPhotos().size() == 0}">
                             <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
                                  class="rounded-circle"
                                  alt="Фото профиля" width="250">
                         </c:if>
-                        <c:if test="${currentUser.getPhotos().size() != 0}">
-                            <img src="${currentUser.getPhotos().getLast()}"
+                        <c:if test="${profileUser.getPhotos().size() != 0}">
+                            <img src="${profileUser.getPhotos().getLast()}"
                                  class="rounded-circle"
                                  alt="Фото профиля" width="250">
                         </c:if>
@@ -37,7 +39,7 @@
                         <div class="col p-4 d-flex flex-column position-static">
 
                             <div class="p-4 mb-3 bg-body-tertiary rounded">
-                                <p class="mb-0">${currentUser.getDescription() == null || currentUser.getDescription().isBlank()? "Add your description" : currentUser.getDescription()}</p>
+                                <p class="mb-0">${profileUser.getDescription() == null || profileUser.getDescription().isBlank()? "Add your description" : profileUser.getDescription()}</p>
                             </div>
                             <div class="container">
                                 <div class="row row-cols-auto">
@@ -70,7 +72,7 @@
                 <hr>
             </li>
             <li>
-                <c:if test="${currentUser.getPhotos().size() == 0}">
+                <c:if test="${profileUser.getPhotos().size() == 0 && isOwner}">
                     <div class="container align-items-center mt-3">
                         <div class="row justify-content-center">
                             <div class="col-4 text-center">
@@ -129,14 +131,14 @@
                         </div>
                     </div>
                 </c:if>
-                <c:if test="${currentUser.getPhotos().size() != 0}">
+                <c:if test="${profileUser.getPhotos().size() != 0}">
                     <ul>
                         <div class="container">
                             <div class="row justify-content-start">
-                                <c:forEach var="photo" items="${currentUser.getPhotos()}">
+                                <c:forEach var="photo" items="${profileUser.getPhotos()}">
                                     <div class="col-4 my-3 d-flex">
                                         <div class="card" style="width: 18rem;">
-                                            <img src="${currentUser.getPhotos().get(1)}" class="card-img-top"
+                                            <img src="${profileUser.getPhotos().get(1)}" class="card-img-top"
                                                  alt="post photo">
                                         </div>
                                     </div>
