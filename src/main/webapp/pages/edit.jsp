@@ -23,11 +23,11 @@
                     <!-- кнопка загрузки нового фото профиля -->
                         <div class="mb-3 text-center">
                         <label for="profilePhoto" class="form-label">
-                            <c:if test="${profileUser.getPhotos().size() != null}">
+                            <c:if test="${currentUser.getPhotos().size() != null}">
                                 <img id="profilePreview" src="${currentUser.getPhotos().getLast()}" alt="Profile photo" class="rounded-circle"
                                      style="width: 100px; height: 100px; cursor: pointer;">
                             </c:if>
-                            <c:if test="${profileUser.getPhotos().getLast() == null}">
+                            <c:if test="${currentUser.getPhotos().getLast() == null}">
                                 <img id="profilePreview" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" alt="Profile photo" class="rounded-circle"
                                      style="width: 100px; height: 100px; cursor: pointer;">
                             </c:if>
@@ -38,13 +38,13 @@
                     <!-- поле для изменения ника -->
                     <div class="mb-3">
                         <label for="nickname" class="form-label">Никнейм</label>
-                        <input type="text" class="form-control" id="nickname" name="nickname" value="${profileUser.getNickname()}" required>
+                        <input type="text" class="form-control" id="nickname" name="nickname" value="${currentUser.getNickname()}" required>
                     </div>
 
                     <!-- поле для описания профиля -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание профиля</label>
-                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${profileUser.getDescription()}</textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${currentUser.getDescription()}</textarea>
                     </div>
 
                     <!-- кнопка сохранения -->
