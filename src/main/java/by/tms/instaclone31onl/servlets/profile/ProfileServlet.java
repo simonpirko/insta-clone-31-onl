@@ -18,6 +18,7 @@ import java.util.UUID;
 @WebServlet(ServletConstants.PROFILE_SERVLET)
 public class ProfileServlet extends BaseApiServlet {
     private final ServiceFactory serviceFactory;
+
     public ProfileServlet() {
         serviceFactory = InstaServiceFactory.getInstance();
     }
@@ -44,5 +45,4 @@ public class ProfileServlet extends BaseApiServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
-
 }

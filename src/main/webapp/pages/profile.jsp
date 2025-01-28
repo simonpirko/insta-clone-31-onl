@@ -1,4 +1,3 @@
-<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -11,7 +10,6 @@
 </head>
 <body>
 <main class="d-flex flex-nowrap">
-
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
@@ -44,11 +42,11 @@
                             <div class="container">
                                 <div class="row row-cols-auto">
                                     <div class="col align-self-end">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                                disabled>
-                                            Публикаций
-                                        </button>
-                                        <!-- add counter -->
+                                        <a href="posts" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                                data-bs-target="#userPostsModal">
+
+                                        </a>
+                                        <a class="btn btn-outline-secondary" href="/post?userId=${profileUser.getId()}" role="button">Побликации: ${userPosts.size()}</a>
                                     </div>
                                     <div class="col align-self-end">
                                         <button type="button" class="btn btn-outline-secondary">
@@ -58,7 +56,7 @@
                                     </div>
                                     <div class="col align-self-end">
                                         <button type="button" class="btn btn-outline-secondary">
-                                            Подписки
+                                            Подписки: ${currentUser.getFriendIds().size()}
                                         </button>
                                         <!-- add counter +modal -->
                                     </div>
@@ -138,7 +136,7 @@
                                 <c:forEach var="photo" items="${profileUser.getPhotos()}">
                                     <div class="col-4 my-3 d-flex">
                                         <div class="card" style="width: 18rem;">
-                                            <img src="${profileUser.getPhotos().get(1)}" class="card-img-top"
+                                            <img src="${photo}" class="card-img-top"
                                                  alt="post photo">
                                         </div>
                                     </div>

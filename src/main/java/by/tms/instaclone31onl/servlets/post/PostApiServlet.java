@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 @WebServlet(name = ServletConstants.POST_API_SERVLET_NAME, value = ServletConstants.POST_API_SERVLET)
@@ -38,9 +39,12 @@ public class PostApiServlet extends BaseApiServlet {
 
     private Predicate<Post> getPredicate(HttpServletRequest request) {
         Predicate<Post> predicate = x -> true;
-
+        String id = request.getParameter("userId");
+        if (id != null) {
+            UUID uuid = UUID.fromString(id);
+            predicate = predicate.and(post -> post.getUserId().equals(uuid));
+        }
         //TODO set filters
-
         return predicate;
     }
 }

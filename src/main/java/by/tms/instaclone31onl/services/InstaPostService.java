@@ -1,6 +1,5 @@
 package by.tms.instaclone31onl.services;
 
-import by.tms.instaclone31onl.core.enums.PostStatus;
 import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.PostRepository;
 import by.tms.instaclone31onl.core.interfaces.repositories.ReactionRepository;
@@ -43,7 +42,7 @@ public class InstaPostService implements PostService {
 
     @Override
     public List<PostDto> getPagedList(Predicate<Post> predicate, int start, int count) {
-        List<Post> posts = postRepository.getPagedList(predicate, start, count );
+        List<Post> posts = postRepository.getPagedList(predicate, start, count);
         List<PostDto> postDtos = new ArrayList<>();
 
         if (posts.isEmpty())
@@ -93,7 +92,7 @@ public class InstaPostService implements PostService {
     @Override
     public List<UUID> insert(PostCreateRequest request) {
         Post newPost = new Post(null, request.getUserId(),
-                request.getDescription(),request.getPhotos(),
+                request.getDescription(), request.getPhotos(),
                 LocalDateTime.now(), request.getStatus());
         return postRepository.insert(List.of(newPost));
     }
