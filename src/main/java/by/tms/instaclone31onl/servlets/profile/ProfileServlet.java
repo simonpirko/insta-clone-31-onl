@@ -29,7 +29,6 @@ public class ProfileServlet extends BaseApiServlet {
         if (str == null) {
             request.setAttribute("isOwner", true);
             request.setAttribute("profileUser", currentUser);
-            request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
         }
         else {
             UUID uuid = UUID.fromString(str);
@@ -37,8 +36,8 @@ public class ProfileServlet extends BaseApiServlet {
             User user = service.getUserById(uuid);
             request.setAttribute("isOwner", false);
             request.setAttribute("profileUser", user);
-            request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
 
     @Override

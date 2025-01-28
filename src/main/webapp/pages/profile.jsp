@@ -35,30 +35,42 @@
                     </div>
                     <div class="col-auto">
                         <div class="col p-4 d-flex flex-column position-static">
-
-                            <div class="p-4 mb-3 bg-body-tertiary rounded">
-                                <p class="mb-0">${profileUser.getDescription() == null || profileUser.getDescription().isBlank()? "Add your description" : profileUser.getDescription()}</p>
-                            </div>
+                            <c:if test="${!isOwner && profileUser.getDescription() != null && !profileUser.getDescription().isBlank()}">
+                                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                                    <p class="mb-0">${profileUser.getDescription()}</p>
+                                </div>
+                            </c:if>
+                            <c:if test="${isOwner}">
+                                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                                    <p class="mb-0">${profileUser.getDescription() == null || profileUser.getDescription().isBlank() ? "Add your description" : profileUser.getDescription()}</p>
+                                </div>
+                            </c:if>
                             <div class="container">
                                 <div class="row row-cols-auto">
-                                    <div class="col align-self-end">
-                                        <a href="posts" type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
-                                                data-bs-target="#userPostsModal">
-
-                                        </a>
-                                        <a class="btn btn-outline-secondary" href="/post?userId=${profileUser.getId()}" role="button">Побликации: ${userPosts.size()}</a>
+                                    <div class="col align-self-start">
+                                        <a class="btn btn-outline-secondary" href="/post?userId=${profileUser.getId()}"
+                                           role="button">Публикации</a>
                                     </div>
-                                    <div class="col align-self-end">
+                                    <div class="col align-self-between">
                                         <button type="button" class="btn btn-outline-secondary">
                                             Подписчики
                                         </button>
                                         <!-- add counter +modal -->
                                     </div>
-                                    <div class="col align-self-end">
+                                    <div class="col align-self-between">
                                         <button type="button" class="btn btn-outline-secondary">
-                                            Подписки: ${currentUser.getFriendIds().size()}
+                                            Подписки: ${profileUser.getFriendIds().size()}
                                         </button>
                                         <!-- add counter +modal -->
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <c:if test="${!isOwner}">
+                                            <form action="${pageContext.request.contextPath}/profile" method="post">
+                                                <button type="button" class="btn btn-outline-secondary">
+                                                    Подписаться
+                                                </button>
+                                            </form>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -151,5 +163,4 @@
 </main>
 <jsp:include page="includes/importJs.jsp"/>
 </body>
-
 </html>

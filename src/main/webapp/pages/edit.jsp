@@ -23,7 +23,7 @@
                     <!-- кнопка загрузки нового фото профиля -->
                         <div class="mb-3 text-center">
                         <label for="profilePhoto" class="form-label">
-                            <img id="profilePreview" src="${currentUser.getPhotos()}" alt="Profile photo" class="rounded-circle"
+                            <img id="profilePreview" src="${currentUser.getPhotos().getLast()}" alt="Profile photo" class="rounded-circle"
                                  style="width: 100px; height: 100px; cursor: pointer;">
                         </label>
                         <input type="file" class="form-control d-none" id="profilePhoto" name="namePhoto" accept="image/*" multiple>

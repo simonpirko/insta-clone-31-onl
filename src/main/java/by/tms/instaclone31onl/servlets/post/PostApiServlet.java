@@ -36,7 +36,6 @@ public class PostApiServlet extends BaseApiServlet {
         return postService.getPagedList(getPredicate(req), start, count);
     }
 
-
     private Predicate<Post> getPredicate(HttpServletRequest request) {
         Predicate<Post> predicate = x -> true;
         String id = request.getParameter("userId");
