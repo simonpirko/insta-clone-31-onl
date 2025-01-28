@@ -21,5 +21,6 @@ public final class ServletConstants {
     public static final List<String> UNAUTHORIZED_URLS = List.of(LOGIN_SERVLET, REGISTRATION_SERVLET, FILL_DATA_SERVLET);
     public static final String COMMENT_SERVLET_NAME = "COMMENT-API-SERVLET";
     public static final String COMMENT_API_SERVLET = "/api/comment";
+    public static final String SEARCH_SERVLET = "/search";
 
 }

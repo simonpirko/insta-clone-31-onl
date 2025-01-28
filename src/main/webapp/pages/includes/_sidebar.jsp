@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link px-0 text-black">
+            <a href="${pageContext.request.contextPath}/search" class="nav-link px-0 text-black">
                 <!-- add link -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi" viewBox="0 0 16 16">
