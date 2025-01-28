@@ -37,4 +37,10 @@ public class InstaUserService implements UserService {
     public void editUser(User user) {
         userRepository.update(user);
     }
+
+    @Override
+    public User getUserById(UUID uuid){
+        return userRepository.getBy(user->user.getId().equals(uuid));
+    }
+
 }
