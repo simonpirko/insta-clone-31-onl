@@ -36,16 +36,16 @@ public class EditProfileServlet extends BaseApiServlet {
         HashMap<String, Object> multiPartContent = getMultiPartContent(request, IMAGES_PROFILE_DESTINATION_FORMAT_PATH.formatted(currentUser.getLogin()));
         String description = null;
         String nickname = null;
-        List<String> photos = null;
+
         if (multiPartContent.containsKey("description")) {
             description = (String) multiPartContent.get("description");
         }
         if (multiPartContent.containsKey("nickname")) {
             nickname = (String) multiPartContent.get("nickname");
         }
-        if (multiPartContent.containsKey("namePhoto")) {
-            photos = (List<String>) multiPartContent.get("namePhoto");
-        }
+        List<String> photos = multiPartContent.containsKey("namePhoto")
+                ? (List<String>) multiPartContent.get("namePhoto")
+                : currentUser.getPhotos();
         return new User(currentUser.getId(), currentUser.getLogin(), currentUser.getHash(), nickname, currentUser.getFriendIds(), currentUser.getBlackList(), photos, description);
     }
 

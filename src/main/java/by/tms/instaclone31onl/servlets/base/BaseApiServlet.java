@@ -93,6 +93,10 @@ public class BaseApiServlet extends HttpServlet {
                 result.put(item.getFieldName(), item.getString());
                 continue;
             }
+
+            if(item.getName().isEmpty() || item.getName().isBlank() || item.getSize() < 1){
+                continue;
+            }
             FileUtils.createDirectoryIfNotExists(directoriesPath);
             String extension = FileUtils.getExtension(item.getName());
             String fileName = FILE_NAME_FORMAT.formatted(UUID.randomUUID().toString(), extension);
