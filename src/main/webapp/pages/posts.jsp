@@ -39,7 +39,7 @@
                                  height="50" alt="Avatar" loading="lazy"/>
                             <div class="d-flex w-100 ps-3">
                                 <div>
-                                    <a :href="'/profile/'+ post.user.id" style="text-align:left">
+                                    <a :href="'/profile?id='+ post.user.id" style="text-align:left">
                                         <h6 class="text-body">
                                             <span x-text="post.user.nickname"></span>
                                             <span class="small text-muted font-weight-normal"> • </span>
