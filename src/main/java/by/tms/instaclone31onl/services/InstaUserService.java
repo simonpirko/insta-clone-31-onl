@@ -43,4 +43,9 @@ public class InstaUserService implements UserService {
         return userRepository.getBy(user->user.getId().equals(uuid));
     }
 
+    @Override
+    public List<User> getAllByNickname(String nickname) {
+        return userRepository.getAllBy(user->user.getNickname().toLowerCase().startsWith(nickname.toLowerCase()));
+    }
+
 }

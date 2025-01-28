@@ -3,7 +3,7 @@
 
 <div class="b-example-divider b-example-vr"></div>
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary menu" style="width: 300px; ">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
+    <a href="${pageContext.request.contextPath}/post" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <!-- add link -->
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
              class="bi" viewBox="0 0 16 16">
@@ -23,7 +23,7 @@
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link px-0 text-black">
+            <a href="${pageContext.request.contextPath}/search" class="nav-link px-0 text-black">
                 <!-- add link -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi" viewBox="0 0 16 16">

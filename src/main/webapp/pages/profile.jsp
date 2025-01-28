@@ -1,4 +1,3 @@
-<%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
@@ -11,7 +10,6 @@
 </head>
 <body>
 <main class="d-flex flex-nowrap">
-
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
@@ -37,30 +35,42 @@
                     </div>
                     <div class="col-auto">
                         <div class="col p-4 d-flex flex-column position-static">
-
-                            <div class="p-4 mb-3 bg-body-tertiary rounded">
-                                <p class="mb-0">${profileUser.getDescription() == null || profileUser.getDescription().isBlank()? "Add your description" : profileUser.getDescription()}</p>
-                            </div>
+                            <c:if test="${!isOwner && profileUser.getDescription() != null && !profileUser.getDescription().isBlank()}">
+                                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                                    <p class="mb-0">${profileUser.getDescription()}</p>
+                                </div>
+                            </c:if>
+                            <c:if test="${isOwner}">
+                                <div class="p-4 mb-3 bg-body-tertiary rounded">
+                                    <p class="mb-0">${profileUser.getDescription() == null || profileUser.getDescription().isBlank() ? "Add your description" : profileUser.getDescription()}</p>
+                                </div>
+                            </c:if>
                             <div class="container">
                                 <div class="row row-cols-auto">
-                                    <div class="col align-self-end">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                                disabled>
-                                            Публикаций
-                                        </button>
-                                        <!-- add counter -->
+                                    <div class="col align-self-start">
+                                        <a class="btn btn-outline-secondary" href="/post?userId=${profileUser.getId()}"
+                                           role="button">Публикации</a>
                                     </div>
-                                    <div class="col align-self-end">
+                                    <div class="col align-self-between">
                                         <button type="button" class="btn btn-outline-secondary">
                                             Подписчики
                                         </button>
                                         <!-- add counter +modal -->
                                     </div>
-                                    <div class="col align-self-end">
+                                    <div class="col align-self-between">
                                         <button type="button" class="btn btn-outline-secondary">
-                                            Подписки
+                                            Подписки: ${profileUser.getFriendIds().size()}
                                         </button>
                                         <!-- add counter +modal -->
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <c:if test="${!isOwner}">
+                                            <form action="${pageContext.request.contextPath}/profile" method="post">
+                                                <button type="button" class="btn btn-outline-secondary">
+                                                    Подписаться
+                                                </button>
+                                            </form>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +148,7 @@
                                 <c:forEach var="photo" items="${profileUser.getPhotos()}">
                                     <div class="col-4 my-3 d-flex">
                                         <div class="card" style="width: 18rem;">
-                                            <img src="${profileUser.getPhotos().get(1)}" class="card-img-top"
+                                            <img src="${photo}" class="card-img-top"
                                                  alt="post photo">
                                         </div>
                                     </div>
@@ -153,5 +163,4 @@
 </main>
 <jsp:include page="includes/importJs.jsp"/>
 </body>
-
 </html>

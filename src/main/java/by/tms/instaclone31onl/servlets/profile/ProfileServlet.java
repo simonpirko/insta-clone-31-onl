@@ -18,6 +18,7 @@ import java.util.UUID;
 @WebServlet(ServletConstants.PROFILE_SERVLET)
 public class ProfileServlet extends BaseApiServlet {
     private final ServiceFactory serviceFactory;
+
     public ProfileServlet() {
         serviceFactory = InstaServiceFactory.getInstance();
     }
@@ -28,7 +29,6 @@ public class ProfileServlet extends BaseApiServlet {
         if (str == null) {
             request.setAttribute("isOwner", true);
             request.setAttribute("profileUser", currentUser);
-            request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
         }
         else {
             UUID uuid = UUID.fromString(str);
@@ -36,13 +36,12 @@ public class ProfileServlet extends BaseApiServlet {
             User user = service.getUserById(uuid);
             request.setAttribute("isOwner", false);
             request.setAttribute("profileUser", user);
-            request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("/pages/profile.jsp").forward(request, response);
     }
-
 }

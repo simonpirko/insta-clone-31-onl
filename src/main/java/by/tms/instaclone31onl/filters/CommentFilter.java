@@ -12,11 +12,7 @@ import java.io.IOException;
 
 @WebFilter(value = ServletConstants.COMMENT_API_SERVLET)
 public class CommentFilter extends HttpFilter {
-    private final int maxLength;
-
-    public CommentFilter(int maxLength) {
-        this.maxLength = maxLength;
-    }
+    private final int maxLength = 1000;
 
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
