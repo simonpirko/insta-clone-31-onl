@@ -14,10 +14,6 @@ import java.io.IOException;
 public class CommentFilter extends HttpFilter {
     private final int maxLength = 1000;
 
-//    public CommentFilter(int maxLength) {
-//        this.maxLength = maxLength;
-//    }
-
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
 

@@ -1,5 +1,6 @@
 <%@ page import="java.util.UUID" %>
-<%@ page import="by.tms.instaclone31onl.core.constants.AttributeConstants" %><%--
+<%@ page import="by.tms.instaclone31onl.core.constants.AttributeConstants" %>
+<%@ page import="java.util.Optional" %><%--
   Created by IntelliJ IDEA.
   User: HP
   Date: 20.12.2024
@@ -9,6 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     UUID id = (UUID) request.getAttribute(AttributeConstants.CURRENT_USER_ID);
+    String userId = request.getParameter("userId");
 %>
 
 <!doctype html>
@@ -24,13 +26,13 @@
 <main class="d-flex flex-nowrap">
     <jsp:include page="includes/_sidebar.jsp"/>
 
-<div class="text-center container-fluid scrollarea" id="card-scroll" x-data="posts" x-on:scroll = "scrollFunction()">
+    <div class="text-center container-fluid scrollarea" id="card-scroll" x-data="posts" x-on:scroll="scrollFunction()">
         <template x-if="!showPosts()">
             <div>No post to view</div>
         </template>
         <template x-if="showPosts()">
 
-            <div class="card" style="width: 48rem" >
+            <div class="card" style="width: 48rem">
                 <template x-for="post in pagedPosts">
                     <div class="border border-left border-right px-0">
 
@@ -43,18 +45,20 @@
                                         <h6 class="text-body">
                                             <span x-text="post.user.nickname"></span>
                                             <span class="small text-muted font-weight-normal"> • </span>
-                                            <span x-text="howManyHours(post.date)" class="small text-muted font-weight-normal"></span>
+                                            <span x-text="howManyHours(post.date)"
+                                                  class="small text-muted font-weight-normal"></span>
                                             <span><i class="fas fa-angle-down float-end"></i></span>
                                         </h6>
                                     </a>
-                                    <p x-text="post.description" style="line-height: 1.2;font-size:13px; text-align:left"></p>
+                                    <p x-text="post.description"
+                                       style="line-height: 1.2;font-size:13px; text-align:left"></p>
 
 
                                     <div :id="'carouselExample'+post.id" class="col carousel slide">
                                         <div class="carousel-inner">
                                             <template x-if="post.images.length">
                                                 <template x-for="(image, index) in post.images">
-                                                    <div class="carousel-item"  :class="{ 'active': index === 0 }">
+                                                    <div class="carousel-item" :class="{ 'active': index === 0 }">
                                                         <img :src="image"
                                                              loading="lazy"
                                                              class="d-block w-100 img-fluid" width="586"
@@ -92,7 +96,8 @@
                                                 <i class="bi bi-hand-thumbs-up"></i>
                                             </template>
                                             </span>
-                                                <span x-text="howManyReactions(post.likes, true)" class="small ps-2"></span>
+                                                <span x-text="howManyReactions(post.likes, true)"
+                                                      class="small ps-2"></span>
                                                 /
                                                 <span @click="setReaction(post.likes, false, post.id)">
                                             <template x-if="isUserParticipationInReaction(post.likes, false)">
@@ -102,12 +107,13 @@
                                                 <i class="bi bi-hand-thumbs-down"></i>
                                             </template>
                                             </span>
-                                                <span x-text="howManyReactions(post.likes, false)" class="small ps-2"></span>
+                                                <span x-text="howManyReactions(post.likes, false)"
+                                                      class="small ps-2"></span>
                                             </li>
 
                                             <li @click="showComments(post.id, post.comments)">
                                                 <template x-if="isUserParticipationInComment(post.comments)">
-                                                    <i  class="bi bi-chat-left-dots-fill"></i>
+                                                    <i class="bi bi-chat-left-dots-fill"></i>
                                                 </template>
                                                 <template x-if="!isUserParticipationInComment(post.comments)">
                                                     <i class="bi bi-chat-left-dots"></i>
@@ -143,8 +149,9 @@
                                 <div style="margin-bottom: 10px; text-align: left; font-size:13px;">
                                     <div class="row">
                                         <div class="col-1">
-                                            <template x-if="comment.author.photos" >
-                                                <img :src="comment.author.photos[0]" class="rounded-circle" height="30" alt="Avatar" loading="lazy"/>
+                                            <template x-if="comment.author.photos">
+                                                <img :src="comment.author.photos[0]" class="rounded-circle" height="30"
+                                                     alt="Avatar" loading="lazy"/>
                                             </template>
                                         </div>
                                         <div class="col">
@@ -152,7 +159,8 @@
                                                 <div class="col">
                                                     <span x-text="comment.author.nickname"></span>
                                                     <span class="small text-muted font-weight-normal"> • </span>
-                                                    <span x-text="howManyHours(comment.date)" class="small text-muted font-weight-normal"></span>
+                                                    <span x-text="howManyHours(comment.date)"
+                                                          class="small text-muted font-weight-normal"></span>
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -169,7 +177,8 @@
                     <div class="modal-footer row">
 
                         <div class="col">
-                            <textarea style="width:100%; resize: none;" class="form-control" id="comment_text" rows="3"></textarea>
+                            <textarea style="width:100%; resize: none;" class="form-control" id="comment_text"
+                                      rows="3"></textarea>
                         </div>
                         <div class="col-3">
                             <button type="button" @click="sendComment()" class="btn btn-primary">Send</button>
@@ -180,7 +189,7 @@
             </div>
         </div>
 
-</div>
+    </div>
 </main>
 
 <jsp:include page="includes/importJs.jsp"/>
@@ -193,22 +202,25 @@
         Alpine.data("posts", () => ({
 
             pagedPosts: [],
-            isDataLoading : false,
-            userId:'<%=id%>',
-            modal : {
-                window:undefined,
-                postId:undefined,
-                textarea:undefined,
-                comments:[]
+            isDataLoading: false,
+            userId: '<%=id%>',
+            modal: {
+                window: undefined,
+                postId: undefined,
+                textarea: undefined,
+                comments: []
             },
-            scrollingElement:{
-                block:undefined
+            postParam:{
+                userId:'<%=userId%>' === 'null' ? undefined : '<%=userId%>'
+            },
+            scrollingElement: {
+                block: undefined
             },
 
             pager: {
-                start:0,
-                count:50,
-                isEnd:false,
+                start: 0,
+                count: 50,
+                isEnd: false,
             },
             init() {
                 this.loaddata();
@@ -217,31 +229,31 @@
                 this.modal.window = new bootstrap.Modal(modalElement);
                 this.modal.textarea = document.getElementById("comment_text");
                 this.scrollingElement.block = document.getElementById("card-scroll");
-                modalElement.addEventListener('hide.bs.modal', function(){
+                modalElement.addEventListener('hide.bs.modal', function () {
                     document.getElementById("comment_text").value = '';
 
                 });
             },
-            separateReaction(likes,like){
-                return likes.filter(function (x){
+            separateReaction(likes, like) {
+                return likes.filter(function (x) {
                     return x.likeIt == like;
                 });
             },
-            setReaction(likes, like,postId){
-                let post = this.pagedPosts.find(x=>x.id === postId);
-                if(post == undefined || post == null){
+            setReaction(likes, like, postId) {
+                let post = this.pagedPosts.find(x => x.id === postId);
+                if (post == undefined || post == null) {
                     return;
                 }
 
-                let userLike = post.likes.find(u=>u.user.id == this.userId);
+                let userLike = post.likes.find(u => u.user.id == this.userId);
 
-                if(userLike === undefined){
+                if (userLike === undefined) {
                     //Create new
                     let createReaction = {
-                        postId:postId,
-                        likeIt:like
+                        postId: postId,
+                        likeIt: like
                     }
-                    fetch( '/api/reaction', {
+                    fetch('/api/reaction', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8'
@@ -249,46 +261,38 @@
                         body: JSON.stringify(createReaction)
                     })
                         .then(response => response.json())
-                        .then(result =>{
-                            if(result.isSuccess){
+                        .then(result => {
+                            if (result.isSuccess) {
                                 post.likes.push(result.content);
                             }
                         })
-                        .catch(resons=>{
+                        .catch(resons => {
                             alert(resons.content)
                         });
-
-                    // let mocklike = {
-                    //     user:{id: this.fakeUserId, nickname: "nickname4",photos:['https://mdbcdn.b-cdn.net/img/Photos/Avatars/img (24).webp']},
-                    //     id:"337c95fc-afe1-4212-aa5c-35944fe382e3",
-                    //     likeIt: like
-                    // }
-                    //post.likes.push(mocklike);
                     return;
                 }
 
-                if(userLike.likeIt == like){
+                if (userLike.likeIt == like) {
                     //DELETE
-                    fetch( '/api/reaction?reactionId='+userLike.id, {
+                    fetch('/api/reaction?reactionId=' + userLike.id, {
                         method: 'DELETE'
                     })
                         .then(response => response.json())
-                        .then(result =>{
-                            if(result.isSuccess){
-                                post.likes = post.likes.filter(x=>x.user.id != this.userId)
+                        .then(result => {
+                            if (result.isSuccess) {
+                                post.likes = post.likes.filter(x => x.user.id != this.userId)
                             }
                         })
-                        .catch(resons=>{
+                        .catch(resons => {
                             alert(resons.content)
                         });
-                }
-                else{
+                } else {
                     //UPDATE
                     let updateReaction = {
-                        reactionId:userLike.id,
-                        likeIt:like
+                        reactionId: userLike.id,
+                        likeIt: like
                     }
-                    fetch( '/api/reaction', {
+                    fetch('/api/reaction', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json;charset=utf-8'
@@ -296,29 +300,29 @@
                         body: JSON.stringify(updateReaction)
                     })
                         .then(response => response.json())
-                        .then(result =>{
-                            if(result.isSuccess){
+                        .then(result => {
+                            if (result.isSuccess) {
                                 userLike.likeIt = like;
                             }
                         })
-                        .catch(resons=>{
+                        .catch(resons => {
                             alert(resons.content)
                         });
                 }
             },
-            howManyReactions(likes, like){
-                return this.separateReaction(likes,like).length;
+            howManyReactions(likes, like) {
+                return this.separateReaction(likes, like).length;
             },
-            sendComment(){
-                if(this.modal.textarea.value === undefined || this.modal.textarea.value === ''){
+            sendComment() {
+                if (this.modal.textarea.value === undefined || this.modal.textarea.value === '') {
                     return;
                 }
                 let comment = {
                     postId: this.modal.postId,
-                    text:this.modal.textarea.value
+                    text: this.modal.textarea.value
                 }
                 //todo send
-                fetch( '/api/comment', {
+                fetch('/api/comment', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json;charset=utf-8'
@@ -326,29 +330,28 @@
                     body: JSON.stringify(comment)
                 })
                     .then(response => response.json())
-                    .then(result =>{
-                        if(result.isSuccess){
+                    .then(result => {
+                        if (result.isSuccess) {
                             this.setComments(result.content)
                             this.modal.textarea.value = '';
                             //post.likes.push(result.content);
                         }
                     })
-                    .catch(resons=>{
+                    .catch(resons => {
                         alert(resons.content)
                     });
             },
-            setComments(comment){
+            setComments(comment) {
                 //mock
                 this.modal.comments.push(comment);
             },
-            showComments(id, comments){
+            showComments(id, comments) {
                 this.modal.postId = id;
                 this.modal.comments = comments;
                 this.modal.window.show();
             },
-            scrollFunction(){
-                if(this.pager.isEnd)
-                {
+            scrollFunction() {
+                if (this.pager.isEnd) {
                     return;
                 }
                 const height = this.scrollingElement.block.scrollHeight;
@@ -362,40 +365,54 @@
                     this.loaddata(this.pager.start);
                 }
             },
-            showPosts(){
+            showPosts() {
                 return this.pagedPosts.length > 0
             },
-            isUserParticipationInComment(comments){
-                return comments.some(u=> u.author.id == this.userId);
+            isUserParticipationInComment(comments) {
+                return comments.some(u => u.author.id == this.userId);
             },
-            isUserParticipationInReaction(reactions, like){
-                return reactions.some(u=>u.user.id == this.userId && u.likeIt == like)
+            isUserParticipationInReaction(reactions, like) {
+                return reactions.some(u => u.user.id == this.userId && u.likeIt == like)
             },
-            howManyHours(date){
+            howManyHours(date) {
 
                 var dateMomentObject = moment(date, "DD-MM-YYYY HH:mm:ss");
                 var dateObject = dateMomentObject.toDate();
                 const seconds = Math.floor((new Date().getTime() - new Date(dateObject).getTime()) / 1000)
                 let interval = seconds / 31536000
-                const rtf = new Intl.RelativeTimeFormat("en", { numeric: 'auto' })
-                if (interval > 1) { return rtf.format(-Math.floor(interval), 'year') }
+                const rtf = new Intl.RelativeTimeFormat("en", {numeric: 'auto'})
+                if (interval > 1) {
+                    return rtf.format(-Math.floor(interval), 'year')
+                }
                 interval = seconds / 2592000
-                if (interval > 1) { return rtf.format(-Math.floor(interval), 'month') }
+                if (interval > 1) {
+                    return rtf.format(-Math.floor(interval), 'month')
+                }
                 interval = seconds / 86400
-                if (interval > 1) { return rtf.format(-Math.floor(interval), 'day') }
+                if (interval > 1) {
+                    return rtf.format(-Math.floor(interval), 'day')
+                }
                 interval = seconds / 3600
-                if (interval > 1) { return rtf.format(-Math.floor(interval), 'hour') }
+                if (interval > 1) {
+                    return rtf.format(-Math.floor(interval), 'hour')
+                }
                 interval = seconds / 60
-                if (interval > 1) { return rtf.format(-Math.floor(interval), 'minute') }
+                if (interval > 1) {
+                    return rtf.format(-Math.floor(interval), 'minute')
+                }
                 return rtf.format(-Math.floor(interval), 'second')
             },
             loaddata(page, count) {
-               let start = page === undefined ? 0 : page;
-               let elements = count === undefined ? 50 :this.pager.count;
+                let start = page === undefined ? 0 : page;
+                let elements = count === undefined ? 50 : this.pager.count;
 
-               let url = '/api/post?start='+start+'&count=' +elements;
+                let url = '/api/post?start=' + start + '&count=' + elements;
 
-               this.isDataLoading = true;
+                if(this.postParam.userId !== undefined && this.postParam.userId !== ''){
+                    url = url + "&userId="+this.postParam.userId;
+                }
+
+                this.isDataLoading = true;
                 fetch(url, {
                     method: 'GET'
                 })
@@ -403,9 +420,8 @@
                     .then(result => {
                         this.pager.isEnd = !result.content || !result.content.length
 
-                        if(!this.pager.isEnd)
-                        {
-                            this.pagedPosts = [ ...this.pagedPosts, ...result.content ];
+                        if (!this.pager.isEnd) {
+                            this.pagedPosts = [...this.pagedPosts, ...result.content];
                         }
 
                         this.isDataLoading = false;
