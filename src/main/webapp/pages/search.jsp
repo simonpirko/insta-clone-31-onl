@@ -13,47 +13,50 @@
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
             <li>
-                <form method="get" action="${pageContext.request.contextPath}/search">
-                <div class="row justify-content-bottom">
-                        <div class="col-8">
-                            <input name="text" class="form-control" placeholder="Введите никнейм пользователя"
-                                   aria-label="username" aria-describedby="button-addon2">
+                <div class="container align-bottom mt-2">
+                    <form method="get" action="${pageContext.request.contextPath}/search" class="align-bottom">
+                        <div class="row justify-content-end">
+                            <div class="col-md-8 align-items-center">
+                                <input name="text" class="form-control fs-5" placeholder="Введите никнейм пользователя"
+                                       aria-label="username" aria-describedby="button-addon2">
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
-                        </div>
+                    </form>
                 </div>
-            </form>
-            </li>
-            <li>
-                <hr>
+                <hr class="ms-2">
             </li>
             <li>
                 <c:if test="${users != null}">
-                    <c:forEach var="user" items="${users}">
-                        <ul>
-                            <div class="container">
-                                <div class="row justify-content-center">
-                                    <div class="col-4 my-3 d-flex">
-                                        <div class="card" style="width: 18rem;">
+                    <div class="d-flex justify-content-evenly ms-4">
+                        <div class="row">
+                            <c:forEach var="user" items="${users}">
+                                <div class="col-4  my-3 d-flex justify-content-evenly p-3">
+                                    <a href="${pageContext.request.contextPath}/profile?id=${user.getId()}"
+                                       class="nav-link px-0 text-black align-middle">
+                                        <div class="card p-2">
                                             <c:if test="${user.getPhotos().size() != 0}">
-                                                <img src="${user.getPhotos().getLast()}" class="card-img-top"
+                                                <img src="${user.getPhotos().getLast()}"
+                                                     class="card-img-top"
                                                      alt="profile photo">
                                             </c:if>
                                             <c:if test="${user.getPhotos().size() == 0}">
-                                                <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" class="card-img-top"
+                                                <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                                                     class="card-img-top"
                                                      alt="profile photo">
                                             </c:if>
-                                            <a href="${pageContext.request.contextPath}/profile?id=${user.getId()}" class="nav-link px-0 text-black">
-                                                <span class="ms-2 d-none d-sm-inline fs-5">${user.getNickname()}</span>
-                                            </a>
+                                            <div class="card-body align-bottom">
+                                                <h5 class="card-text text-center ">${user.getNickname()}</h5>
+                                            </div>
                                         </div>
-
-                                    </div>
+                                    </a>
                                 </div>
-                            </div>
-                        </ul>
-                    </c:forEach>
+                            </c:forEach>
+                        </div>
+                    </div>
                 </c:if>
             </li>
         </ul>
