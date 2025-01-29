@@ -26,7 +26,7 @@ public class ProfileServlet extends BaseApiServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String str = request.getParameter("id");
-        if (str == null) {
+        if (str == null || str.equals(currentUser.getId().toString())) {
             request.setAttribute("isOwner", true);
             request.setAttribute("profileUser", currentUser);
         }
