@@ -18,36 +18,28 @@
                 <hr>
             </li>
             <li>
-                <!-- элементы изменения профиля (пароль, никнейм, фото, описание профиля) -->
                 <form action="${pageContext.request.contextPath}/edit" method="post" enctype="multipart/form-data" class="p-4">
-                    <!-- кнопка загрузки нового фото профиля -->
                         <div class="mb-3 text-center">
                         <label for="profilePhoto" class="form-label">
-                            <c:if test="${currentUser.getPhotos().size() != null}">
+                            <c:if test="${currentUser.getPhotos().size() != 0}">
                                 <img id="profilePreview" src="${currentUser.getPhotos().getLast()}" alt="Profile photo" class="rounded-circle"
                                      style="width: 100px; height: 100px; cursor: pointer;">
                             </c:if>
-                            <c:if test="${currentUser.getPhotos().getLast() == null}">
+                            <c:if test="${currentUser.getPhotos().size() == 0}">
                                 <img id="profilePreview" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" alt="Profile photo" class="rounded-circle"
                                      style="width: 100px; height: 100px; cursor: pointer;">
                             </c:if>
                         </label>
                         <input type="file" class="form-control d-none" id="profilePhoto" name="namePhoto" accept="image/*" multiple>
                     </div>
-
-                    <!-- поле для изменения ника -->
                     <div class="mb-3">
                         <label for="nickname" class="form-label">Никнейм</label>
                         <input type="text" class="form-control" id="nickname" name="nickname" value="${currentUser.getNickname()}" required>
                     </div>
-
-                    <!-- поле для описания профиля -->
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание профиля</label>
                         <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${profileUser.getDescription()}</textarea>
                     </div>
-
-                    <!-- кнопка сохранения -->
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
                     </div>
