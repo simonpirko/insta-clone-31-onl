@@ -38,7 +38,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="description" class="form-label">Описание профиля</label>
-                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${currentUser.getDescription()}</textarea>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Расскажите о себе...">${profileUser.getDescription()}</textarea>
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary">Сохранить изменения</button>
