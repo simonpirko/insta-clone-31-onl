@@ -12,4 +12,5 @@ public interface UserService {
     void editUser(User user);
     User getUserById(UUID uuid);
     List<User> getAllByNickname(String nickname);
+    List<User> searchIn(List<UUID> ids, String nickname) ;
 }

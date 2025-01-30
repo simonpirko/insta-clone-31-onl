@@ -2,18 +2,9 @@ package by.tms.instaclone31onl.factories;
 
 import by.tms.instaclone31onl.core.context.CsvContext;
 import by.tms.instaclone31onl.core.interfaces.factories.RepositoryFactory;
-import by.tms.instaclone31onl.core.interfaces.repositories.CommentRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.PostRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.ReactionRepository;
-import by.tms.instaclone31onl.core.interfaces.repositories.UserRepository;
-import by.tms.instaclone31onl.core.models.entities.Comment;
-import by.tms.instaclone31onl.core.models.entities.Post;
-import by.tms.instaclone31onl.core.models.entities.Reaction;
-import by.tms.instaclone31onl.core.models.entities.User;
-import by.tms.instaclone31onl.repositories.InstaCommentRepository;
-import by.tms.instaclone31onl.repositories.InstaPostRepository;
-import by.tms.instaclone31onl.repositories.InstaReactionRepository;
-import by.tms.instaclone31onl.repositories.InstaUserRepository;
+import by.tms.instaclone31onl.core.interfaces.repositories.*;
+import by.tms.instaclone31onl.core.models.entities.*;
+import by.tms.instaclone31onl.repositories.*;
 
 public class InstaRepositoryFactory implements RepositoryFactory {
 
@@ -43,6 +34,11 @@ public class InstaRepositoryFactory implements RepositoryFactory {
     @Override
     public ReactionRepository getReactionRepository() {
         return new InstaReactionRepository(csvContext.getCsvTable(Reaction.class));
+    }
+
+    @Override
+    public FriendRequestRepository getFriendRequestRepository() {
+        return new InstaFriendRequestRepository(csvContext.getCsvTable(FriendRequest.class));
     }
 
 

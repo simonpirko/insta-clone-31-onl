@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -39,9 +40,16 @@ public class PostApiServlet extends BaseApiServlet {
     private Predicate<Post> getPredicate(HttpServletRequest request) {
         Predicate<Post> predicate = x -> true;
         String id = request.getParameter("userId");
+        boolean isFriends = Boolean.parseBoolean(request.getParameter("friends"));
+
         if (id != null) {
             UUID uuid = UUID.fromString(id);
             predicate = predicate.and(post -> post.getUserId().equals(uuid));
+        }
+        if(isFriends)
+        {
+            List<UUID> friendIds = currentUser.getFriendIds();
+            predicate = predicate.and(post -> friendIds.contains(post.getUserId()));
         }
         //TODO set filters
         return predicate;

@@ -8,4 +8,5 @@ public interface ServiceFactory {
     CommentService getCommentService();
     UserService getUserService();
     FileService getFileService();
+    FriendRequestService getFriendRequestService();
 }

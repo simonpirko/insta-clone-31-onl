@@ -46,4 +46,10 @@ public class InstaServiceFactory implements ServiceFactory{
         return new InstaFileService();
     }
 
+    @Override
+    public FriendRequestService getFriendRequestService() {
+        return new InstaFriendRequestService(repositoryFactory.getFriendRequestRepository(),
+                repositoryFactory.getUserRepository());
+    }
+
 }

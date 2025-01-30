@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @SuperBuilder
 @Entity(name="users", directories = "\\resources")
@@ -70,6 +71,10 @@ public class User extends BaseEntity {
         return description;
     }
 
+    public void addFriend(UUID friendId) {
+        friendIds.add(friendId);
+    }
+
     @Override
     public String[] getLine() {
         return new String[]{
@@ -89,8 +94,10 @@ public class User extends BaseEntity {
                 line[1],
                 line[2],
                 line[3],
-                (List<UUID>)JsonConverter.deserialize(line[4], List.class),
-                (List<UUID>)JsonConverter.deserialize(line[5], List.class),
+                ((List<String>)JsonConverter.deserialize(line[4], List.class))
+                        .stream().map(s->UUID.fromString(s)).collect(Collectors.toList()),
+                ((List<String>)JsonConverter.deserialize(line[5], List.class))
+                        .stream().map(s->UUID.fromString(s)).collect(Collectors.toList()),
                 (List<String>)JsonConverter.deserialize(line[6], List.class),
                 line.length > 7 ? line[7] : null
                 );
