@@ -8,7 +8,6 @@ import by.tms.instaclone31onl.core.models.requests.PostCreateRequest;
 import by.tms.instaclone31onl.factories.InstaServiceFactory;
 import by.tms.instaclone31onl.servlets.base.BaseApiServlet;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,6 +25,13 @@ public class PostHtmlServlet extends BaseApiServlet {
     }
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String noPostsMessage = "Нет публикаций для отображения";
+        String userId = request.getParameter("userId");
+        if(userId != null)
+            noPostsMessage = "У данного пользователя нет публикаций";
+        if (Boolean.parseBoolean(request.getParameter("friends")))
+            noPostsMessage = "Ваши друзья пока не сделали публикаций";
+        request.setAttribute("noPostsMessage", noPostsMessage);
         request.getRequestDispatcher("/pages/posts.jsp").forward(request, response);
     }
 
@@ -33,7 +39,6 @@ public class PostHtmlServlet extends BaseApiServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         PostService postService = serviceFactory.getPostService();
         PostCreateRequest postCreateRequest = getPostCreateRequest(request);
-        List<UUID> uuids = postService.insert(postCreateRequest);
         request.getRequestDispatcher("/pages/posts.jsp").include(request, response);
 
     }
