@@ -27,17 +27,23 @@
 <body>
 <main class="d-flex flex-nowrap">
     <jsp:include page="includes/_sidebar.jsp"/>
-
-    <div class="text-center container-fluid scrollarea" id="card-scroll" x-data="posts" x-on:scroll="scrollFunction()">
+    <div class="d-flex justify-content-center text-center container-fluid scrollarea" id="card-scroll" x-data="posts" x-on:scroll="scrollFunction()">
         <template x-if="!showPosts()">
-            <div>No post to view</div>
+            <div class="d-flex justify-content-center align-items-center mt-4">
+                <div class="container">
+                <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" fill="currentColor" class="bi bi-journal-richtext" viewBox="0 0 16 16">
+                    <path d="M7.5 3.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0m-.861 1.542 1.33.886 1.854-1.855a.25.25 0 0 1 .289-.047L11 4.75V7a.5.5 0 0 1-.5.5h-5A.5.5 0 0 1 5 7v-.5s1.54-1.274 1.639-1.208M5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"></path>
+                    <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2"></path>
+                    <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1z"></path>
+                </svg>
+                <div class="fs-4 mt-3">${noPostsMessage}</div>
+            </div>
+            </div>
         </template>
         <template x-if="showPosts()">
-
-            <div class="card" style="width: 48rem">
+            <div class="card" style="height: max-content; width: 48rem "  >
                 <template x-for="post in pagedPosts">
                     <div class="border border-left border-right px-0">
-
                         <div class="d-flex p-3 border-bottom">
                             <img :src="post.user.photos[0]" class="rounded-circle"
                                  height="50" alt="Avatar" loading="lazy"/>
@@ -54,8 +60,6 @@
                                     </a>
                                     <p x-text="post.description"
                                        style="line-height: 1.2;font-size:13px; text-align:left"></p>
-
-
                                     <div :id="'carouselExample'+post.id" class="col carousel slide">
                                         <div class="carousel-inner">
                                             <template x-if="post.images.length">
@@ -70,7 +74,7 @@
                                             </template>
                                             <template x-if="!post.images.length">
                                                 <div>
-                                                    NOT images to display
+                                                    NO images to display
                                                 </div>
                                             </template>
                                         </div>
@@ -85,8 +89,6 @@
                                             <span class="visually-hidden">Next</span>
                                         </button>
                                     </div>
-
-
                                     <div style="margin-top: 10px">
                                         <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
                                             <li>
@@ -112,7 +114,6 @@
                                                 <span x-text="howManyReactions(post.likes, false)"
                                                       class="small ps-2"></span>
                                             </li>
-
                                             <li @click="showComments(post.id, post.comments)">
                                                 <template x-if="isUserParticipationInComment(post.comments)">
                                                     <i class="bi bi-chat-left-dots-fill"></i>
@@ -128,8 +129,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </template>
             </div>
@@ -174,10 +173,8 @@
                                 </div>
                             </template>
                         </template>
-
                     </div>
                     <div class="modal-footer row">
-
                         <div class="col">
                             <textarea style="width:100%; resize: none;" class="form-control" id="comment_text"
                                       rows="3"></textarea>
@@ -185,12 +182,10 @@
                         <div class="col-3">
                             <button type="button" @click="sendComment()" class="btn btn-primary">Send</button>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 </main>
 
