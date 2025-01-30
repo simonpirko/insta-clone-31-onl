@@ -3,8 +3,8 @@
 
 <div class="b-example-divider b-example-vr"></div>
 <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary menu" style="width: 300px; ">
-    <a href="${pageContext.request.contextPath}/post" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-        <!-- add link -->
+    <a href="${pageContext.request.contextPath}/post"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
              class="bi" viewBox="0 0 16 16">
             <path d="M8 16A8 8 0 1 1 8 0a8 8 0 0 1 0 16M1 8a7 7 0 0 0 7 7 3.5 3.5 0 1 0 0-7 3.5 3.5 0 1 1 0-7 7 7 0 0 0-7 7"></path>
@@ -25,15 +25,15 @@
         <li class="nav-item">
             <a href="${pageContext.request.contextPath}/post?friends=true" class="nav-link px-0 text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                     class="bi" viewBox="0 0 16 16">
-                    <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"></path>
+                     class="bi bi-person-video3" viewBox="0 0 16 16">
+                    <path d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0m-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2"></path>
+                    <path d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783Q16 12.312 16 12V4a2 2 0 0 0-2-2z"></path>
                 </svg>
-                <span class="ms-2 d-none d-sm-inline fs-5">Лента друзей</span>
+                <span class="ms-2 d-none d-sm-inline fs-5">Публикации друзей</span>
             </a>
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/search" class="nav-link px-0 text-black">
-                <!-- add link -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                      class="bi" viewBox="0 0 16 16">
                     <path d="M6.5 4.482c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018"></path>
@@ -45,9 +45,8 @@
         <li>
             <a href="${pageContext.request.contextPath}/friends" class="nav-link px-0 text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                     class="bi" viewBox="0 0 16 16">
-                    <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1z"></path>
-                    <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0"></path>
+                     class="bi bi-people" viewBox="0 0 16 16">
+                    <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1zm-7.978-1L7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002-.014.002zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4m3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0M6.936 9.28a6 6 0 0 0-1.23-.247A7 7 0 0 0 5 9c-4 0-5 3-5 4q0 1 1 1h4.216A2.24 2.24 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816M4.92 10A5.5 5.5 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275ZM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0m3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4"></path>
                 </svg>
                 <span class="ms-2 d-none d-sm-inline fs-5">Мои друзья</span>
             </a>
@@ -77,7 +76,8 @@
                                   enctype="multipart/form-data">
                                 <div class="mb-3">
                                     <label for="formFileMultiple" class="form-label">Выберите изображение</label>
-                                    <input class="form-control" type="file" name="file" accept="image/*" id="formFileMultiple" multiple/>
+                                    <input class="form-control" type="file" name="file" accept="image/*"
+                                           id="formFileMultiple" multiple/>
                                 </div>
 
                                 <div class="mb-3">
@@ -89,7 +89,7 @@
                                 <button type="submit" class="btn btn-outline-secondary w-100">Опубликовать</button>
                             </form>
                             <script>
-                                document.getElementById('formFileMultiple').addEventListener('change', function() {
+                                document.getElementById('formFileMultiple').addEventListener('change', function () {
                                     var files = this.files;
                                     if (files.length > 5) {
                                         alert('Можно загрузить не более 5 файлов');
@@ -101,7 +101,6 @@
                 </div>
             </div>
         </li>
-
         <li>
             <a href="${pageContext.request.contextPath}/edit" class="nav-link px-0 align-middle text-black">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"

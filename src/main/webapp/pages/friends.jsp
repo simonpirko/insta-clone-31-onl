@@ -1,4 +1,3 @@
-<%@ page import="java.util.UUID" %>
 <%@ page import="java.util.Optional" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
@@ -17,24 +16,26 @@
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
         <ul class="list-group list-group-flush">
+
             <li>
-                <form method="get" action="${pageContext.request.contextPath}/friendsearch">
-                    <c:if test="<%=optionalUserId.isPresent()%>">
-                    <input type="hidden" value="<%=optionalUserId.get()%>" name="userId">
-                    </c:if>
-                    <div class="row justify-content-bottom">
-                        <div class="col-8">
-                            <input name="text" class="form-control" placeholder="Введите никнейм пользователя"
-                                   aria-label="username" aria-describedby="button-addon2">
+                <div class="container align-bottom mt-2">
+                    <form method="get" action="${pageContext.request.contextPath}/friendsearch" class="align-bottom">
+                        <c:if test="<%=optionalUserId.isPresent()%>">
+                            <input type="hidden" value="<%=optionalUserId.get()%>" name="userId">
+                        </c:if>
+                        <div class="row justify-content-end">
+                            <div class="col-md-8 align-items-center">
+                                <input name="text" class="form-control fs-5" placeholder="Введите никнейм друга"
+                                       aria-label="username" aria-describedby="button-addon2">
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-4">
-                            <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Поиск</button>
-                        </div>
-                    </div>
-                </form>
-            </li>
-            <li>
-                <hr>
+                    </form>
+                </div>
+                <hr class="ms-2">
             </li>
             <li>
                 <c:if test="${users != null}">
@@ -49,10 +50,12 @@
                                                      alt="profile photo">
                                             </c:if>
                                             <c:if test="${user.getPhotos().size() == 0}">
-                                                <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" class="card-img-top"
+                                                <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                                                     class="card-img-top"
                                                      alt="profile photo">
                                             </c:if>
-                                            <a href="${pageContext.request.contextPath}/profile?id=${user.getId()}" class="nav-link px-0 text-black">
+                                            <a href="${pageContext.request.contextPath}/profile?id=${user.getId()}"
+                                               class="nav-link px-0 text-black">
                                                 <span class="ms-2 d-none d-sm-inline fs-5">${user.getNickname()}</span>
                                             </a>
                                         </div>
@@ -63,9 +66,8 @@
                         </ul>
                     </c:forEach>
                 </c:if>
-
                 <c:if test="${users == null || users.size() < 1}">
-                    <div>No friends to view</div>
+                    <div class="text-center fs-4 mt-5">нет инфы</div>
                 </c:if>
             </li>
         </ul>
