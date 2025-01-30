@@ -15,28 +15,25 @@
 <main class="d-flex flex-nowrap">
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
-        <ul class="list-group list-group-flush">
-
-            <li>
-                <div class="container align-bottom mt-2">
-                    <form method="get" action="${pageContext.request.contextPath}/friendsearch" class="align-bottom">
-                        <c:if test="<%=optionalUserId.isPresent()%>">
-                            <input type="hidden" value="<%=optionalUserId.get()%>" name="userId">
-                        </c:if>
-                        <div class="row justify-content-end">
-                            <div class="col-md-8 align-items-center">
-                                <input name="text" class="form-control fs-5" placeholder="Введите никнейм друга"
-                                       aria-label="username" aria-describedby="button-addon2">
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="row">
+            <form method="get" action="${pageContext.request.contextPath}/friendsearch" class="my-3 ms-4">
+                <c:if test="<%=optionalUserId.isPresent()%>">
+                    <input type="hidden" value="<%=optionalUserId.get()%>" name="userId">
+                </c:if>
+                <div class="row justify-content-end">
+                    <div class="col-md-8 align-items-center">
+                        <input name="text" class="form-control fs-5" placeholder="Введите никнейм друга"
+                               aria-label="username" aria-describedby="button-addon2">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
+                        </button>
+                    </div>
                 </div>
-                <hr class="ms-2">
-            </li>
+                <hr class="mt-2">
+            </form>
+        </div>
+        <ul class="list-group list-group-flush">
             <li>
                 <c:if test="${users != null}">
                     <c:forEach var="user" items="${users}">

@@ -11,30 +11,29 @@
 <main class="d-flex flex-nowrap">
     <jsp:include page="includes/_sidebar.jsp"/>
     <div class="container-fluid list-group list-group-flush border-bottom scrollarea">
-        <ul class="list-group list-group-flush">
-            <li>
-                <div class="container align-bottom mt-2">
-                    <form method="get" action="${pageContext.request.contextPath}/search" class="align-bottom">
-                        <div class="row justify-content-end">
-                            <div class="col-md-8 align-items-center">
-                                <input name="text" class="form-control fs-5" placeholder="Введите никнейм пользователя"
-                                       aria-label="username" aria-describedby="button-addon2">
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+        <div class="row">
+            <form method="get" action="${pageContext.request.contextPath}/search" class="mt-3 ms-4">
+                <div class="row">
+                    <div class="col-md-8">
+                        <input name="text" class="form-control fs-5" placeholder="Введите никнейм пользователя"
+                               aria-label="username" aria-describedby="button-addon2">
+                    </div>
+                    <div class="col-4">
+                        <button class="btn btn-outline-secondary fs-5" type="submit" id="button-addon2">Поиск
+                        </button>
+                    </div>
                 </div>
-                <hr class="ms-2">
-            </li>
+                <hr class="mt-2 mb-1">
+            </form>
+        </div>
+
+        <ul class="list-group list-group-flush">
             <li>
                 <c:if test="${users != null}">
                     <div class="d-flex justify-content-evenly ms-4">
                         <div class="row">
                             <c:forEach var="user" items="${users}">
-                                <div class="col-4  my-3 d-flex justify-content-evenly p-3">
+                                <div class="col-4  mb-1 d-flex justify-content-evenly p-3">
                                     <a href="${pageContext.request.contextPath}/profile?id=${user.getId()}"
                                        class="nav-link px-0 text-black align-middle">
                                         <div class="card p-2">

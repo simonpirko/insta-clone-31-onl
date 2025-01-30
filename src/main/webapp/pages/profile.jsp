@@ -103,7 +103,8 @@
                                                                         </c:if>
                                                                         <c:if test="${myRequest.photos().size() == 0}">
                                                                             <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-                                                                                 class="card-img-top rounded-circle" height="30"
+                                                                                 class="card-img-top rounded-circle"
+                                                                                 height="30"
                                                                                  alt="Avatar" loading="lazy">
                                                                         </c:if>
                                                                     </div>
@@ -173,7 +174,8 @@
                                                                         </c:if>
                                                                         <c:if test="${myRequest.photos().size() == 0}">
                                                                             <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
-                                                                                 class="card-img-top rounded-circle" height="30"
+                                                                                 class="card-img-top rounded-circle"
+                                                                                 height="30"
                                                                                  alt="Avatar" loading="lazy">
                                                                         </c:if>
                                                                     </div>
@@ -183,7 +185,8 @@
                                                                     <div class="col">
                                                                         <div class="btn-group" role="group"
                                                                              aria-label="Basic mixed styles example">
-                                                                            <form method="post" action="${pageContext.request.contextPath}/request">
+                                                                            <form method="post"
+                                                                                  action="${pageContext.request.contextPath}/request">
                                                                                 <input type="hidden" value="false"
                                                                                        name="rejected"/>
                                                                                 <input type="hidden"
@@ -193,7 +196,8 @@
                                                                                         class="btn btn-success">Принять
                                                                                 </button>
                                                                             </form>
-                                                                            <form method="post" action="${pageContext.request.contextPath}/request">
+                                                                            <form method="post"
+                                                                                  action="${pageContext.request.contextPath}/request">
                                                                                 <input type="hidden" value="true"
                                                                                        name="rejected"/>
                                                                                 <input type="hidden"
@@ -283,20 +287,17 @@
                     </div>
                 </c:if>
                 <c:if test="${profileUser.getPhotos().size() != 0}">
-                    <ul>
-                        <div class="container">
-                            <div class="row justify-content-start">
-                                <c:forEach var="photo" items="${profileUser.getPhotos()}">
-                                    <div class="col-4 my-3 d-flex">
-                                        <div class="card" style="width: 18rem;">
-                                            <img src="${photo}" class="card-img-top"
-                                                 alt="post photo">
-                                        </div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <c:forEach var="photo" items="${profileUser.getPhotos()}">
+                                <div class="col-4 mb-4">
+                                    <div class="card">
+                                        <img src="${photo}" class="card-img-top" alt="photo">
                                     </div>
-                                </c:forEach>
-                            </div>
+                                </div>
+                            </c:forEach>
                         </div>
-                    </ul>
+                    </div>
                 </c:if>
             </li>
         </ul>
