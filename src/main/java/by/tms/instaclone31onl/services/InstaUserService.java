@@ -7,6 +7,7 @@ import org.mindrot.jbcrypt.BCrypt;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 public class InstaUserService implements UserService {
@@ -46,6 +47,12 @@ public class InstaUserService implements UserService {
     @Override
     public List<User> getAllByNickname(String nickname) {
         return userRepository.getAllBy(user->user.getNickname().toLowerCase().startsWith(nickname.toLowerCase()));
+    }
+
+    @Override
+    public List<User> searchIn(List<UUID> ids, String nickname) {
+        boolean hasNickname = Optional.ofNullable(nickname).isPresent() && !nickname.isBlank();
+        return userRepository.getAllBy(u->ids.contains(u.getId()) && (hasNickname ? u.getNickname().toLowerCase().startsWith(nickname.toLowerCase()) : true ));
     }
 
 }

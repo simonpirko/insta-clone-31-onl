@@ -10,6 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     UUID id = (UUID) request.getAttribute(AttributeConstants.CURRENT_USER_ID);
+    Optional optionalFriend = Optional.ofNullable(request.getParameter("friends"));
+    boolean isFriends = optionalFriend.isPresent() && Boolean.parseBoolean(optionalFriend.get().toString());
     String userId = request.getParameter("userId");
 %>
 
@@ -211,7 +213,8 @@
                 comments: []
             },
             postParam:{
-                userId:'<%=userId%>' === 'null' ? undefined : '<%=userId%>'
+                userId:'<%=userId%>' === 'null' ? undefined : '<%=userId%>',
+                friends:'<%=isFriends%>' === 'true'
             },
             scrollingElement: {
                 block: undefined
@@ -410,6 +413,9 @@
 
                 if(this.postParam.userId !== undefined && this.postParam.userId !== ''){
                     url = url + "&userId="+this.postParam.userId;
+                }
+                if(this.postParam.friends){
+                    url = url + "&friends=true"
                 }
 
                 this.isDataLoading = true;

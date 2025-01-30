@@ -22,5 +22,8 @@ public final class ServletConstants {
     public static final String COMMENT_SERVLET_NAME = "COMMENT-API-SERVLET";
     public static final String COMMENT_API_SERVLET = "/api/comment";
     public static final String SEARCH_SERVLET = "/search";
+    public static final String FRIEND_SEARCH_SERVLET = "/friendsearch";
+    public static final String FRIENDS_SERVLET = "/friends";
+    public static final String FRIEND_REQUEST_SERVLET = "/request";
 
 }
